@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="邓聪个人博客" />
+    
+    <title>
+      dubbo处理自定义异常问题 - DcBlog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/style/style.css">
+  </head>
+  <body>
+    <div id="fixed-menu">
+      <span class="iconfont icon-arrowup"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          首页
+        </a>
+        
+        <a href="/archives" class="">
+          归档
+        </a>
+        
+        <a href="/categories" class="">
+          分类
+        </a>
+        
+        <a href="/tags" class="">
+          标签
+        </a>
+        
+        <a href="/friends" class="">
+          友链
+        </a>
+        
+        <a href="/about" class="">
+          关于
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <div class="author">DeCo</div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author">DeCo</div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            首页
+          </a>
+          
+          <a href="/archives" class="">
+            归档
+          </a>
+          
+          <a href="/categories" class="">
+            分类
+          </a>
+          
+          <a href="/tags" class="">
+            标签
+          </a>
+          
+          <a href="/friends" class="">
+            友链
+          </a>
+          
+          <a href="/about" class="">
+            关于
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/dclog" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+            
+            <a href="https://www.facebook.com/" target="_block">
+              <span class="iconfont icon-facebook"></span>
+            </a>
+            
+            <a href="https://www.instagram.com/" target="_block">
+              <span class="iconfont icon-instagram"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      <div class="title">dubbo处理自定义异常问题</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2019/05/17</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/java">java</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/dubbo">dubbo</a>
+                  
+                
+                  
+                    <a href="/tags/异常">异常</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <p>在使用dubb的时候发现了一个问题，在api包中自定义了异常，在服务提供端抛出，在服务消费端竟然无法捕获</p>
+<blockquote>
+<p>dubbo-api</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> demo.dubbo.spring.boot.api.exception.ApiException;
+<span class="hljs-keyword">import</span> demo.dubbo.spring.boot.api.exception.ApiRuntimeException;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">EchoService</span> </span>&#123;
+
+    <span class="hljs-function">String <span class="hljs-title">echo</span><span class="hljs-params">(String message)</span></span>;
+
+    <span class="hljs-function">String <span class="hljs-title">echoExp</span><span class="hljs-params">(String message)</span> <span class="hljs-keyword">throws</span> ApiException</span>;
+
+    <span class="hljs-function">String <span class="hljs-title">echoRuntimeExp</span><span class="hljs-params">(String message)</span></span>;
+&#125;</code></pre>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApiException</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Exception</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">7811529833876460537L</span>;
+&#125;</code></pre>
+
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ApiRuntimeException</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RuntimeException</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = -<span class="hljs-number">5973522858593078694L</span>;
+&#125;</code></pre>
+
+<blockquote>
+<p>dubbo-provider</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-meta">@Service</span>(
+        version = <span class="hljs-string">"$&#123;echo.service.version&#125;"</span>,
+        application = <span class="hljs-string">"$&#123;dubbo.application.id&#125;"</span>,
+        protocol = <span class="hljs-string">"$&#123;dubbo.protocol.id&#125;"</span>,
+        registry = <span class="hljs-string">"$&#123;dubbo.registry.id&#125;"</span>
+)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DefaultEchoService</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">EchoService</span> </span>&#123;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echo</span><span class="hljs-params">(String message)</span> </span>&#123;
+        String response = <span class="hljs-string">"Echo : "</span> + message;
+        System.out.println(response);
+        <span class="hljs-keyword">return</span> response;
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echoExp</span><span class="hljs-params">(String message)</span> <span class="hljs-keyword">throws</span> ApiException </span>&#123;
+        String response = <span class="hljs-string">"Echo : "</span> + message;
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">true</span>) &#123;
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ApiException();
+        &#125;
+        <span class="hljs-keyword">return</span> response;
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echoRuntimeExp</span><span class="hljs-params">(String message)</span> </span>&#123;
+        String response = <span class="hljs-string">"Echo : "</span> + message;
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">true</span>) &#123;
+            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ApiRuntimeException();
+        &#125;
+        <span class="hljs-keyword">return</span> response;
+    &#125;
+&#125;</code></pre>
+
+<blockquote>
+<p>dubbo-consumer</p>
+</blockquote>
+<pre><code class="hljs java">  <span class="hljs-meta">@Reference</span>(
+        version = <span class="hljs-string">"$&#123;echo.service.version&#125;"</span>,
+        application = <span class="hljs-string">"$&#123;dubbo.application.id&#125;"</span>,
+        url = <span class="hljs-string">"dubbo://localhost:12345"</span>
+)
+<span class="hljs-keyword">private</span> EchoService echoService;
+
+<span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/exp"</span>)
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echoExp</span><span class="hljs-params">(@RequestParam String message)</span> <span class="hljs-keyword">throws</span> ApiException </span>&#123;
+    <span class="hljs-keyword">try</span> &#123;
+        <span class="hljs-keyword">return</span> echoService.echoExp(message);
+    &#125; <span class="hljs-keyword">catch</span> (ApiException e) &#123;
+        System.out.println(<span class="hljs-string">"ApiException"</span>);
+    &#125; <span class="hljs-keyword">catch</span> (RuntimeException e) &#123;
+        System.out.println(<span class="hljs-string">"RuntimeException"</span>);
+    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+        System.out.println(<span class="hljs-string">"Exception"</span>);
+    &#125;
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"errormsg"</span>;
+&#125;
+
+<span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/expRun"</span>)
+<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echoExpRun</span><span class="hljs-params">(@RequestParam String message)</span> </span>&#123;
+    <span class="hljs-keyword">try</span> &#123;
+        <span class="hljs-keyword">return</span> echoService.echoRuntimeExp(message);
+    &#125; <span class="hljs-keyword">catch</span> (ApiRuntimeException e) &#123;
+        System.out.println(<span class="hljs-string">"ApiRuntimeException"</span>);
+    &#125; <span class="hljs-keyword">catch</span> (RuntimeException e) &#123;
+        System.out.println(<span class="hljs-string">"RuntimeException"</span>);
+    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;
+        System.out.println(<span class="hljs-string">"Exception"</span>);
+    &#125;
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"errormsg"</span>;
+&#125;</code></pre>
+
+
+<blockquote>
+<p>控制台打印</p>
+</blockquote>
+<pre><code class="hljs plain">RuntimeException
+RuntimeException</code></pre>
+
+<blockquote>
+<p>自定义异常没有捕获到。。RuntimeException倒是捕获成功了。。</p>
+</blockquote>
+<blockquote>
+<p>查阅了一下资料以后是因为dubbo对异常进行了处理,如果Dubbo的暴露抛出异常（Throwable），则会被暴露方的ExceptionFilter拦截到，执行以下invoke方法:</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-comment">/**
+ * ExceptionInvokerFilter
+ * &lt;p&gt;
+ * Functions:
+ * &lt;ol&gt;
+ * &lt;li&gt;unexpected exception will be logged in ERROR level on provider side. Unexpected exception are unchecked
+ * exception not declared on the interface&lt;/li&gt;
+ * &lt;li&gt;Wrap the exception not introduced in API package into RuntimeException. Framework will serialize the outer exception but stringnize its cause in order to avoid of possible serialization problem on client side&lt;/li&gt;
+ * &lt;/ol&gt;
+ * &lt;p&gt;
+ * 功能：
+ * &lt;ol&gt;
+ * &lt;li&gt;不期望的异常打ERROR日志（Provider端）&lt;br&gt;
+ *     不期望的日志即是，没有的接口上声明的Unchecked异常。
+ * &lt;li&gt;异常不在API包中，则Wrap一层RuntimeException。&lt;br&gt;
+ *     RPC对于第一层异常会直接序列化传输(Cause异常会String化)，避免异常在Client出不能反序列化问题。
+ */</span>
+<span class="hljs-meta">@Activate</span>(group = Constants.PROVIDER)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExceptionFilter</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Filter</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Logger logger;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ExceptionFilter</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">this</span>(LoggerFactory.getLogger(ExceptionFilter<span class="hljs-class">.<span class="hljs-keyword">class</span>))</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ExceptionFilter</span><span class="hljs-params">(Logger logger)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.logger = logger;
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> Result <span class="hljs-title">invoke</span><span class="hljs-params">(Invoker&lt;?&gt; invoker, Invocation invocation)</span> <span class="hljs-keyword">throws</span> RpcException </span>&#123;
+        <span class="hljs-keyword">try</span> &#123;
+            Result result = invoker.invoke(invocation);
+            <span class="hljs-keyword">if</span> (result.hasException() &amp;&amp; GenericService<span class="hljs-class">.<span class="hljs-keyword">class</span> !</span>= invoker.getInterface()) &#123;
+                <span class="hljs-keyword">try</span> &#123;
+                    Throwable exception = result.getException();
+
+                    <span class="hljs-comment">// directly throw if it's checked exception</span>
+										<span class="hljs-comment">// 如果是checked异常，直接抛出</span>
+                    <span class="hljs-keyword">if</span> (!(exception <span class="hljs-keyword">instanceof</span> RuntimeException) &amp;&amp; (exception <span class="hljs-keyword">instanceof</span> Exception)) &#123;
+                        <span class="hljs-keyword">return</span> result;
+                    &#125;
+                    <span class="hljs-comment">// directly throw if the exception appears in the signature</span>
+										<span class="hljs-comment">// 在方法签名上有声明，直接抛出</span>
+                    <span class="hljs-keyword">try</span> &#123;
+                        Method method = invoker.getInterface().getMethod(invocation.getMethodName(), invocation.getParameterTypes());
+                        Class&lt;?&gt;[] exceptionClassses = method.getExceptionTypes();
+                        <span class="hljs-keyword">for</span> (Class&lt;?&gt; exceptionClass : exceptionClassses) &#123;
+                            <span class="hljs-keyword">if</span> (exception.getClass().equals(exceptionClass)) &#123;
+                                <span class="hljs-keyword">return</span> result;
+                            &#125;
+                        &#125;
+                    &#125; <span class="hljs-keyword">catch</span> (NoSuchMethodException e) &#123;
+                        <span class="hljs-keyword">return</span> result;
+                    &#125;
+
+										<span class="hljs-comment">// 未在方法签名上定义的异常，在服务器端打印ERROR日志	</span>
+                    <span class="hljs-comment">// for the exception not found in method's signature, print ERROR message in server's log.</span>
+                    logger.error(<span class="hljs-string">"Got unchecked and undeclared exception which called by "</span> + RpcContext.getContext().getRemoteHost()
+                            + <span class="hljs-string">". service: "</span> + invoker.getInterface().getName() + <span class="hljs-string">", method: "</span> + invocation.getMethodName()
+                            + <span class="hljs-string">", exception: "</span> + exception.getClass().getName() + <span class="hljs-string">": "</span> + exception.getMessage(), exception);
+										
+										<span class="hljs-comment">// 异常类和接口类在同一jar包里，直接抛出</span>
+                    <span class="hljs-comment">// directly throw if exception class and interface class are in the same jar file.</span>
+                    String serviceFile = ReflectUtils.getCodeBase(invoker.getInterface());
+                    String exceptionFile = ReflectUtils.getCodeBase(exception.getClass());
+                    <span class="hljs-keyword">if</span> (serviceFile == <span class="hljs-keyword">null</span> || exceptionFile == <span class="hljs-keyword">null</span> || serviceFile.equals(exceptionFile)) &#123;
+                        <span class="hljs-keyword">return</span> result;
+                    &#125;
+										<span class="hljs-comment">// 是JDK自带的异常，直接抛出</span>
+                    <span class="hljs-comment">// directly throw if it's JDK exception</span>
+                    String className = exception.getClass().getName();
+                    <span class="hljs-keyword">if</span> (className.startsWith(<span class="hljs-string">"java."</span>) || className.startsWith(<span class="hljs-string">"javax."</span>)) &#123;
+                        <span class="hljs-keyword">return</span> result;
+                    &#125;
+										<span class="hljs-comment">// 是Dubbo本身的异常，直接抛出</span>
+                    <span class="hljs-comment">// directly throw if it's dubbo exception</span>
+                    <span class="hljs-keyword">if</span> (exception <span class="hljs-keyword">instanceof</span> RpcException) &#123;
+                        <span class="hljs-keyword">return</span> result;
+                    &#125;
+
+										<span class="hljs-comment">// 否则，包装成RuntimeException抛给客户端</span>
+                    <span class="hljs-comment">// otherwise, wrap with RuntimeException and throw back to the client</span>
+                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RpcResult(<span class="hljs-keyword">new</span> RuntimeException(StringUtils.toString(exception)));
+                &#125; <span class="hljs-keyword">catch</span> (Throwable e) &#123;
+                    logger.warn(<span class="hljs-string">"Fail to ExceptionFilter when called by "</span> + RpcContext.getContext().getRemoteHost()
+                            + <span class="hljs-string">". service: "</span> + invoker.getInterface().getName() + <span class="hljs-string">", method: "</span> + invocation.getMethodName()
+                            + <span class="hljs-string">", exception: "</span> + e.getClass().getName() + <span class="hljs-string">": "</span> + e.getMessage(), e);
+                    <span class="hljs-keyword">return</span> result;
+                &#125;
+            &#125;
+            <span class="hljs-keyword">return</span> result;
+        &#125; <span class="hljs-keyword">catch</span> (RuntimeException e) &#123;
+            logger.error(<span class="hljs-string">"Got unchecked and undeclared exception which called by "</span> + RpcContext.getContext().getRemoteHost()
+                    + <span class="hljs-string">". service: "</span> + invoker.getInterface().getName() + <span class="hljs-string">", method: "</span> + invocation.getMethodName()
+                    + <span class="hljs-string">", exception: "</span> + e.getClass().getName() + <span class="hljs-string">": "</span> + e.getMessage(), e);
+            <span class="hljs-keyword">throw</span> e;
+        &#125;
+    &#125;
+
+&#125;</code></pre>
+
+<blockquote>
+<p>调试发现在生产者端是返回的是自定义的异常</p>
+</blockquote>
+<p><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/dubbo/1.png" target="_blank" rel="noopener" data-caption data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/dubbo/1.png" alt></a><br><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/dubbo/2.png" target="_blank" rel="noopener" data-caption data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/dubbo/2.png" alt></a></p>
+<blockquote>
+<p>消费端catch到的是动态代理异常UndeclaredThrowableException</p>
+</blockquote>
+<p><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/dubbo/3.png" target="_blank" rel="noopener" data-caption data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/dubbo/3.png" alt></a></p>
+
+
+  
+    <div class="post-reward">
+      <div id="reward-button">请杯咖啡呗~</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="/images/alipay.jpg" target="_block" class="bg" style="background-image:url('/images/alipay.jpg')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="/images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+    </div>
+    <div class="item right">
+        
+          <a href="68870659.html">Groovy使用</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="https://blog.dclog.cn">DeCo</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="https://blog.dclog.cn/e80a56ae.html">https://blog.dclog.cn/e80a56ae.html</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="https://blog.dclog.cn">DeCo</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2019
+            <a href="https://blog.dclog.cn">DeCo</a> Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> |
+            <a href="https://github.com/shixiaohu2206/hexo-theme-huhu" target="_blank" rel="noopener">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 

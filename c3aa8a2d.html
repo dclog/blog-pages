@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="邓聪个人博客" />
+    
+    <title>
+      nacos--配置中心使用 - DcBlog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/style/style.css">
+  </head>
+  <body>
+    <div id="fixed-menu">
+      <span class="iconfont icon-arrowup"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          首页
+        </a>
+        
+        <a href="/archives" class="">
+          归档
+        </a>
+        
+        <a href="/categories" class="">
+          分类
+        </a>
+        
+        <a href="/tags" class="">
+          标签
+        </a>
+        
+        <a href="/friends" class="">
+          友链
+        </a>
+        
+        <a href="/about" class="">
+          关于
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <div class="author">DeCo</div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author">DeCo</div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            首页
+          </a>
+          
+          <a href="/archives" class="">
+            归档
+          </a>
+          
+          <a href="/categories" class="">
+            分类
+          </a>
+          
+          <a href="/tags" class="">
+            标签
+          </a>
+          
+          <a href="/friends" class="">
+            友链
+          </a>
+          
+          <a href="/about" class="">
+            关于
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/dclog" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+            
+            <a href="https://www.facebook.com/" target="_block">
+              <span class="iconfont icon-facebook"></span>
+            </a>
+            
+            <a href="https://www.instagram.com/" target="_block">
+              <span class="iconfont icon-instagram"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      <div class="title">nacos--配置中心使用</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2018/12/24</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/中间件">中间件</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/nacos alibaba spring-boot">nacos alibaba spring-boot</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <h1 id="什么是nacos"><a href="#什么是nacos" class="headerlink hidden" title="什么是nacos">#</a>什么是<a href="https://nacos.io/zh-cn/docs/what-is-nacos.html" target="_blank" rel="noopener">nacos</a></h1><blockquote>
+<p>Nacos 支持基于 DNS 和基于 RPC 的服务发现（可以作为springcloud的注册中心）、动态配置服务（可以做配置中心）、动态 DNS 服务。</p>
+</blockquote>
+<blockquote>
+<p>以下内容都是基于spring-boot 2.0.6.RELEASE + nacos</p>
+</blockquote>
+<h1 id="依赖管理"><a href="#依赖管理" class="headerlink hidden" title="依赖管理">#</a>依赖管理</h1><p>项目: <a href="https://github.com/nacos-group/nacos-spring-boot-project" target="_blank" rel="noopener">nacos-spring-boot-project</a></p>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.alibaba.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>nacos-config-spring-boot-starter<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.2.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+<h1 id="基于yml配置"><a href="#基于yml配置" class="headerlink hidden" title="基于yml配置">#</a>基于yml配置</h1><pre><code class="hljs yml"><span class="hljs-attr">nacos:</span>
+  <span class="hljs-attr">config:</span>
+    <span class="hljs-attr">server-addr:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.190</span><span class="hljs-number">.128</span><span class="hljs-string">:8848</span></code></pre>
+<blockquote>
+<p>namespace是命名空间 ID，不能配置命名空间名称。如果不配置namespace，默认使用public</p>
+</blockquote>
+<h1 id="Nacos控制台新建配置"><a href="#Nacos控制台新建配置" class="headerlink hidden" title="Nacos控制台新建配置">#</a>Nacos控制台新建配置</h1><p><strong>Data ID:</strong> nacos.cfg.dataId<br><strong>Group:</strong> test</p>
+<blockquote>
+<p>test=dc</p>
+</blockquote>
+<h1 id="启动类"><a href="#启动类" class="headerlink hidden" title="启动类">#</a>启动类</h1><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-meta">@NacosPropertySource</span>(dataId = DATA_ID,groupId = GROUP_ID, autoRefreshed = <span class="hljs-keyword">true</span>)
+<span class="hljs-meta">@Slf</span>4j
+<span class="hljs-meta">@RestController</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NacosApp</span> </span>&#123;
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String DATA_ID = <span class="hljs-string">"nacos.cfg.dataId"</span>;
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String GROUP_ID = <span class="hljs-string">"test"</span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;
+        SpringApplication.run(NacosApp<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">args</span>)</span>;
+    &#125;
+
+    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/getValue"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getValue</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> value;
+    &#125;
+
+    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/getNacosValue"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getNacosValue</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> nacosValue;
+    &#125;
+
+
+    <span class="hljs-meta">@Value</span>(value = <span class="hljs-string">"$&#123;test:value&#125;"</span>)
+    <span class="hljs-keyword">private</span> String value;
+
+    <span class="hljs-meta">@NacosValue</span>(value = <span class="hljs-string">"$&#123;test:nacosValue&#125;"</span>, autoRefreshed = <span class="hljs-keyword">true</span>)
+    <span class="hljs-keyword">private</span> String nacosValue;
+
+
+    <span class="hljs-meta">@NacosConfigListener</span>(
+            dataId = NacosApp.DATA_ID,
+            timeout = <span class="hljs-number">500</span>
+    )
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">onChange</span><span class="hljs-params">(String newContent)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        log.info(<span class="hljs-string">"onChange: &#123;&#125;"</span>, newContent);
+    &#125;
+&#125;</code></pre>
+
+<h1 id="Spring-Value注解和-Nacos-NacosValue-注解"><a href="#Spring-Value注解和-Nacos-NacosValue-注解" class="headerlink hidden" title="Spring @Value注解和 Nacos @NacosValue 注解">#</a>Spring @Value注解和 Nacos @NacosValue 注解</h1><table>
+<thead>
+<tr>
+<th>注解</th>
+<th>是否支持动态更新</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Value</td>
+<td>否</td>
+<td></td>
+</tr>
+<tr>
+<td>@NacosValue</td>
+<td>是</td>
+<td>需配置autoRefreshed=true</td>
+</tr>
+</tbody></table>
+<h1 id="测试"><a href="#测试" class="headerlink hidden" title="测试">#</a>测试</h1><pre><code class="hljs bash">curl -X GET <span class="hljs-string">"http://192.168.123.59:8080/getValue"</span>
+dc
+curl -X GET <span class="hljs-string">"http://192.168.123.59:8080/getNacosValue"</span>
+dc
+<span class="hljs-comment">#发布/更改配置</span>
+curl -X POST <span class="hljs-string">"http://127.0.0.1:8848/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=test=dcUpdate"</span>
+curl -X GET <span class="hljs-string">"http://192.168.123.59:8080/getValue"</span>
+dc
+curl -X GET <span class="hljs-string">"http://192.168.123.59:8080/getNacosValue"</span>
+dcUpdate</code></pre>
+
+
+  
+    <div class="post-reward">
+      <div id="reward-button">请杯咖啡呗~</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="/images/alipay.jpg" target="_block" class="bg" style="background-image:url('/images/alipay.jpg')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="/images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="c7b970e7.html">virtualenv及virtualenvwrapper安装与使用</a>
+        
+    </div>
+    <div class="item right">
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="https://blog.dclog.cn">DeCo</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="https://blog.dclog.cn/c3aa8a2d.html">https://blog.dclog.cn/c3aa8a2d.html</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="https://blog.dclog.cn">DeCo</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2019
+            <a href="https://blog.dclog.cn">DeCo</a> Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> |
+            <a href="https://github.com/shixiaohu2206/hexo-theme-huhu" target="_blank" rel="noopener">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="邓聪个人博客" />
+    
+    <title>
+      SpringBoot异常处理汇总 - DcBlog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/style/style.css">
+  </head>
+  <body>
+    <div id="fixed-menu">
+      <span class="iconfont icon-arrowup"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          首页
+        </a>
+        
+        <a href="/archives" class="">
+          归档
+        </a>
+        
+        <a href="/categories" class="">
+          分类
+        </a>
+        
+        <a href="/tags" class="">
+          标签
+        </a>
+        
+        <a href="/friends" class="">
+          友链
+        </a>
+        
+        <a href="/about" class="">
+          关于
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <div class="author">DeCo</div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author">DeCo</div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            首页
+          </a>
+          
+          <a href="/archives" class="">
+            归档
+          </a>
+          
+          <a href="/categories" class="">
+            分类
+          </a>
+          
+          <a href="/tags" class="">
+            标签
+          </a>
+          
+          <a href="/friends" class="">
+            友链
+          </a>
+          
+          <a href="/about" class="">
+            关于
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/dclog" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+            
+            <a href="https://www.facebook.com/" target="_block">
+              <span class="iconfont icon-facebook"></span>
+            </a>
+            
+            <a href="https://www.instagram.com/" target="_block">
+              <span class="iconfont icon-instagram"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      <div class="title">SpringBoot异常处理汇总</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2019/04/23</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/java">java</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/SpringBoot">SpringBoot</a>
+                  
+                
+                  
+                    <a href="/tags/SpringMVC">SpringMVC</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <h1 id="前言"><a href="#前言" class="headerlink hidden" title="前言">#</a>前言</h1><p>在实际开发中，我们会遇到很多异常，在发生异常的时候Spring Boot默认提供了错误页面展示给用户。看似比较友好，其实页面很丑。<br>上面讲的是做页面开发的时候遇到的问题，还有一种情况就是用来开发Rest接口，当错误的时候我们希望返回给用户的是我们接口的标准格式，不是返回一段html代码。<br>接下来分别给大家介绍下解决方案：</p>
+<h1 id="页面处理"><a href="#页面处理" class="headerlink hidden" title="页面处理">#</a>页面处理</h1><blockquote>
+<p>首先我们来看页面错误的处理情况，当我们的程序内部报错的时候或者访问的页面找不到的时候，我们可以看到下面的错误页面：</p>
+</blockquote>
+<h1 id="先查看SpringBoot官方文档"><a href="#先查看SpringBoot官方文档" class="headerlink hidden" title="先查看SpringBoot官方文档">#</a><a href="https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/htmlsingle/#boot-features-error-handling" target="_blank" rel="noopener">先查看SpringBoot官方文档</a></h1><p><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422211319.png" target="_blank" rel="noopener" data-caption="SpringBoot官方文档" data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422211319.png" alt="SpringBoot官方文档"></a></p>
+<blockquote>
+<p>大致意思就是Spring Boot本身是内置了一个异常处理机制的, 会判断请求头的参数来区分要返回 JSON 数据还是错误页面. 源码为: org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController, 他会处理/error 请求. 核心处理代码如下:</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-meta">@RequestMapping</span>(
+    produces = &#123;<span class="hljs-string">"text/html"</span>&#125;
+)
+<span class="hljs-comment">// 请求头是text/html则找到错误页面并返回</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title">errorHtml</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;
+    <span class="hljs-comment">// 1.获取Http状态码</span>
+    HttpStatus status = <span class="hljs-keyword">this</span>.getStatus(request);
+    <span class="hljs-comment">// 2.调用getErrorAttributes获取响应的map集合</span>
+    Map&lt;String, Object&gt; model = Collections.unmodifiableMap(<span class="hljs-keyword">this</span>.getErrorAttributes(request, <span class="hljs-keyword">this</span>.isIncludeStackTrace(request, MediaType.TEXT_HTML)));
+    <span class="hljs-comment">// 3.设置响应头的状态码</span>
+    response.setStatus(status.value());
+    <span class="hljs-comment">// 4. 获取错误页面的路径</span>
+    ModelAndView modelAndView = <span class="hljs-keyword">this</span>.resolveErrorView(request, response, status, model);
+    <span class="hljs-comment">// 5. 没有获取到资源则返回默认error页面</span>
+    <span class="hljs-keyword">return</span> modelAndView != <span class="hljs-keyword">null</span> ? modelAndView : <span class="hljs-keyword">new</span> ModelAndView(<span class="hljs-string">"error"</span>, model);
+&#125;
+
+<span class="hljs-meta">@RequestMapping</span>
+<span class="hljs-meta">@ResponseBody</span>
+<span class="hljs-keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; error(HttpServletRequest request) &#123;
+     <span class="hljs-comment">// 调用 getErrorAttributes 获取响应的 map 结果集.</span>
+    Map&lt;String, Object&gt; body = <span class="hljs-keyword">this</span>.getErrorAttributes(request, <span class="hljs-keyword">this</span>.isIncludeStackTrace(request, MediaType.ALL));
+    <span class="hljs-comment">// 获取 HTTP 错误状态码</span>
+    HttpStatus status = <span class="hljs-keyword">this</span>.getStatus(request);
+    <span class="hljs-comment">// 返回给页面 JSON 信息.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResponseEntity(body, status);
+&#125;</code></pre>
+<blockquote>
+<p>这两个方法的共同点是: 他们都调用了 this.getErrorAttributes(…) 方法来获取响应信息.</p>
+</blockquote>
+<p>然后来看看他默认情况下对于 AJAX 请求和 HTML 请求, 分别的返回结果是怎样的:<br><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422213027.png" target="_blank" rel="noopener" data-caption="html错误页面" data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422213027.png" alt="html错误页面"></a><br><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422213039.png" target="_blank" rel="noopener" data-caption="Ajax错误页面" data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422213039.png" alt="Ajax错误页面"></a><br>对于返回错误页面, 其中还调用了一个非常重要的方法: this.resolveErrorView(request, response, status, model) 方法,分析核心代码</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title">resolveErrorView</span><span class="hljs-params">(HttpServletRequest request, HttpStatus status,
+		Map&lt;String, Object&gt; model)</span> </span>&#123;
+	<span class="hljs-comment">// 通过 HTTP 错误状态码获取ModelAndView</span>
+	ModelAndView modelAndView = resolve(String.valueOf(status.value()), model);
+	<span class="hljs-comment">// 如果没有获取到，并且状态码包含SERIES_VIEWS键名中（SERIES_VIEWS -&gt; HttpStatus内部的枚举Series的Map）</span>
+	<span class="hljs-keyword">if</span> (modelAndView == <span class="hljs-keyword">null</span> &amp;&amp; SERIES_VIEWS.containsKey(status.series())) &#123;
+		<span class="hljs-comment">// 通过key =&gt; status.series() 的值（4xx,5xx）获取视图</span>
+		modelAndView = resolve(SERIES_VIEWS.get(status.series()), model);
+	&#125;
+	<span class="hljs-keyword">return</span> modelAndView;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> ModelAndView <span class="hljs-title">resolve</span><span class="hljs-params">(String viewName, Map&lt;String, Object&gt; model)</span> </span>&#123;
+	<span class="hljs-comment">// 加上 error/ 路径</span>
+	String errorViewName = <span class="hljs-string">"error/"</span> + viewName;
+	<span class="hljs-comment">// 先通过模板引擎获取视图</span>
+	<span class="hljs-comment">// 遍历所有Sprng容器中 TemplateAvailabilityProvider 的实现类（JspTemplateAvailabilityProvider，TemplateAvailabilityProvider。。。）一个一个获取</span>
+	<span class="hljs-comment">// 例如是使用JSP模板， 配置如:spring.mvc.view.prefix=/WEB-INF/page/ spring.mvc.view.suffix=.jsp</span>
+	<span class="hljs-comment">// 查找路径 classpath:/WEB-INF/page/404.jsp 。。。</span>
+	TemplateAvailabilityProvider provider = <span class="hljs-keyword">this</span>.templateAvailabilityProviders
+			.getProvider(errorViewName, <span class="hljs-keyword">this</span>.applicationContext);
+	<span class="hljs-keyword">if</span> (provider != <span class="hljs-keyword">null</span>) &#123;
+		<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ModelAndView(errorViewName, model);
+	&#125;
+	<span class="hljs-comment">// 通过SpringBoot的默认资源获取视图</span>
+	<span class="hljs-keyword">return</span> resolveResource(errorViewName, model);
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">private</span> ModelAndView <span class="hljs-title">resolveResource</span><span class="hljs-params">(String viewName, Map&lt;String, Object&gt; model)</span> </span>&#123;
+	<span class="hljs-comment">// "classpath:/META-INF/resources/" -&gt; "classpath:/resources/" -&gt; "classpath:/static/" -&gt; "classpath:/public/</span>
+	<span class="hljs-comment">// 如果配置了  spring.resources.static-locations=/aaa,/bbb 则使用自己配置的</span>
+	<span class="hljs-keyword">for</span> (String location : <span class="hljs-keyword">this</span>.resourceProperties.getStaticLocations()) &#123;
+		<span class="hljs-keyword">try</span> &#123;
+			Resource resource = <span class="hljs-keyword">this</span>.applicationContext.getResource(location);
+			<span class="hljs-comment">// 例如 classpath:/META-INF/resources/404.html</span>
+			resource = resource.createRelative(viewName + <span class="hljs-string">".html"</span>);
+			<span class="hljs-keyword">if</span> (resource.exists()) &#123;
+				<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ModelAndView(<span class="hljs-keyword">new</span> HtmlResourceView(resource), model);
+			&#125;
+		&#125;
+		<span class="hljs-keyword">catch</span> (Exception ex) &#123;
+		&#125;
+	&#125;
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+&#125;</code></pre>
+
+<blockquote>
+<p>总结：它的作用就是根据 HTTP 状态码来去找错误页面, 如 500 错误会去找 /error/500.html, 403 错误回去找 /error/403.html, 如果找不到则再找 /error/4xx.html 或 /error/5xx.html 页面. 还找不到的话, 如果都没有配置, 则会使用 Spring Boot 默认的页面. 即:<br><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422213027.png" target="_blank" rel="noopener" data-caption="html错误页面" data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422213027.png" alt="html错误页面"></a><br>这样就可以通过在资源目录下增加404.html、500.html、5xx.html。。。等来达到自定义错误页面的效果</p>
+</blockquote>
+<h1 id="REST接口处理"><a href="#REST接口处理" class="headerlink hidden" title="REST接口处理">#</a>REST接口处理</h1><p>在开发rest接口时，我们往往会定义统一的返回格式，列如：</p>
+<pre><code class="hljs java">&#123;
+    <span class="hljs-string">"errcode"</span>: <span class="hljs-string">"0"</span>,
+    <span class="hljs-string">"errmsg"</span>: <span class="hljs-string">"ok"</span>,
+    <span class="hljs-string">"data"</span>: &#123;
+        <span class="hljs-string">"city_name"</span>: <span class="hljs-string">"深圳"</span>,
+        <span class="hljs-string">"area_code"</span>: <span class="hljs-string">"0755"</span>,
+        <span class="hljs-string">"servicer"</span>: <span class="hljs-string">"CTCC"</span>,
+        <span class="hljs-string">"province_name"</span>: <span class="hljs-string">"广东"</span>
+    &#125;
+&#125;</code></pre>
+<p>但是如果调用方请求我们的api时把接口地址写错了，浏览器请求就会得到一个404错误页面，ajax请求会返回默认格式json数据，最友好的方式就是返回固定的JSON格式</p>
+<pre><code class="hljs java">&#123;
+    <span class="hljs-string">"timestamp"</span>: <span class="hljs-string">"2019-04-22T14:48:37.416+0000"</span>,
+    <span class="hljs-string">"status"</span>: <span class="hljs-number">404</span>,
+    <span class="hljs-string">"error"</span>: <span class="hljs-string">"Not Found"</span>,
+    <span class="hljs-string">"message"</span>: <span class="hljs-string">"No message available"</span>,
+    <span class="hljs-string">"path"</span>: <span class="hljs-string">"/rest/test11"</span>
+&#125;</code></pre>
+<p><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422225352.png" target="_blank" rel="noopener" data-caption="SpringBoot官方文档" data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/20190422225352.png" alt="SpringBoot官方文档"></a></p>
+<blockquote>
+<p>可以使用 @ControllerAdvice注解自定义要为特定控制器或异常类型返回的JSON文档</p>
+</blockquote>
+<ul>
+<li>定义返回JSON数据实体类<pre><code class="hljs java"><span class="hljs-meta">@Data</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseResponse</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Serializable</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> serialVersionUID = <span class="hljs-number">1L</span>;
+    <span class="hljs-comment">/**
+     * 状态码：0-成功，其他-失败
+     */</span>
+    <span class="hljs-keyword">public</span> String errcode = <span class="hljs-string">"0"</span>;
+    <span class="hljs-comment">/**
+     * 成功返回：ok，失败返回具体原因
+     */</span>
+    <span class="hljs-keyword">public</span> String errmsg = <span class="hljs-string">"ok"</span>;
+    <span class="hljs-comment">/**
+     * 返回的数据结果集
+     */</span>
+    <span class="hljs-keyword">public</span> Object data;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">BaseResponse</span><span class="hljs-params">()</span> </span>&#123;
+    &#125;
+    ....
+&#125;</code></pre></li>
+<li>创建自定义Controller异常捕获类<pre><code class="hljs java"><span class="hljs-meta">@ControllerAdvice</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GlobalExceptionHandler</span> </span>&#123;
+
+    <span class="hljs-comment">//捕获指定异常</span>
+    <span class="hljs-meta">@ExceptionHandler</span>(ArithmeticException<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    @<span class="hljs-title">ResponseBody</span>
+    <span class="hljs-title">public</span> <span class="hljs-title">BaseResponse</span> <span class="hljs-title">arithmeticExceptionHandler</span>(<span class="hljs-title">ArithmeticException</span> <span class="hljs-title">e</span>)</span>&#123;
+        BaseResponse response = <span class="hljs-keyword">new</span> BaseResponse();
+        response.setErrmsg(<span class="hljs-string">"ArithmeticException"</span>);
+        response.setErrcode(<span class="hljs-string">"-1"</span>);
+        <span class="hljs-keyword">return</span> response;
+    &#125;
+
+    <span class="hljs-comment">//捕获其他异常</span>
+    <span class="hljs-meta">@ResponseBody</span>
+    <span class="hljs-meta">@ExceptionHandler</span>(Exception<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    <span class="hljs-title">public</span> <span class="hljs-title">BaseResponse</span> <span class="hljs-title">exceptionHandler</span>(<span class="hljs-title">Exception</span> <span class="hljs-title">e</span>)</span>&#123;
+        BaseResponse response = <span class="hljs-keyword">new</span> BaseResponse();
+        response.setErrmsg(<span class="hljs-string">"其他异常"</span>);
+        response.setErrcode(<span class="hljs-string">"-1"</span>);
+        <span class="hljs-keyword">return</span> response;
+    &#125;
+&#125;</code></pre>
+<blockquote>
+<p>使用 @ControllerAdvice + @ExceptionHandler 会发现能够捕获到Controller中抛出的异常，但是没有找到对应的handler是无法捕获到,仍然是走的BasicErrorController的errorHtml或者error方法。下面来分析SpringBoot中异常的分类</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="异常的分类"><a href="#异常的分类" class="headerlink hidden" title="异常的分类">#</a>异常的分类</h1><p>在一个Spring Boot项目中，我们可以把异常分为两种，第一种是请求到达Controller层之前，第二种是到达Controller层之后项目代码中发生的错误。<br>而第一种又可以分为两种错误类型：1. 路径错误 2. 类似于请求方式错误，参数类型不对等类似错误。<br><a href="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/java7-1547970341.jpg" target="_blank" rel="noopener" data-caption="异常的分类" data-fancybox="images"><img src="https://vue-admin.oss-cn-hangzhou.aliyuncs.com/dcblog/springboot-exception/java7-1547970341.jpg" alt="异常的分类"></a><br>@ExceptionHandler只捕获到第二种异常，如果想要拦截404错误的话,需要在spring boot中做如下设置</p>
+<pre><code class="hljs properties"><span class="hljs-meta">spring.mvc.throw-exception-if-no-handler-found</span>=<span class="hljs-string">true</span>
+<span class="hljs-meta">spring.resources.add-mappings</span>=<span class="hljs-string">false</span></code></pre>
+<p>这两行配置的主要意思是告诉spring,如果你请求的地址,没有找到对应的handler,则抛出异常,默认配置是fase,同时也要关掉静态资源的映射,不然并不会起作用.</p>
+<pre><code class="hljs java"><span class="hljs-comment">// 捕获404异常</span>
+<span class="hljs-meta">@ExceptionHandler</span>(NoHandlerFoundException<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+@<span class="hljs-title">ResponseBody</span>
+<span class="hljs-title">public</span> <span class="hljs-title">BaseResponse</span> <span class="hljs-title">noHandlerFoundException</span>(<span class="hljs-title">NoHandlerFoundException</span> <span class="hljs-title">e</span>)</span>&#123;
+    BaseResponse response = <span class="hljs-keyword">new</span> BaseResponse();
+    response.setErrmsg(<span class="hljs-string">"NoHandlerFoundException"</span>);
+    response.setErrcode(<span class="hljs-string">"-1"</span>);
+    <span class="hljs-keyword">return</span> response;
+&#125;</code></pre>
+<p>按照以上的配置,我们可以轻易的将404错误也变成一个异常,然后走统一的异常处理方式,但是这样做是有代价的,就是也会关闭掉spring boot的默认资源mapping功能.<br><a href="https://docs.spring.io/spring-boot/docs/2.0.6.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-static-content" target="_blank" rel="noopener">(大家可查阅spring boot官方文档,来了解如何处理静态资源)</a><br>测试时又发现了一个问题,页面请求404会被捕获并返回自定义处理的结果，只能是页面或者json数据，这种方式适用于前端分离的项目。<br>如果项目中有html页面请求做统一处理，又需要对ajax请求返回固定的JSON格式数据这种方式就无法满足了<br>我将这种需求分成两种情况</p>
+<ul>
+<li>A.两种Controller分别处理html页面请求和处理ajax请求</li>
+<li>B.在一个Controller中有处理html页面请求和处理ajax请求的Mapping(应该很少吧。)</li>
+</ul>
+<h3 id="A情况解决方案"><a href="#A情况解决方案" class="headerlink hidden" title="A情况解决方案">#</a>A情况解决方案</h3><p>这种种情况的解决可以使用注解的方式解决，通过注解的方式实现处理异常主要有以下两种方式：</p>
+<ul>
+<li>1 @ControllerAdvice+@ExceptionHandler：配置对全局异常进行处理（ControllerAdvice还有很多配置这里就不讲了）</li>
+<li>2 @Controller + @ExceptionHandler：配置对当前所在Controller的异常进行处理<blockquote>
+<p>@ExceptionHandler：此注解注解到类的方法上，当此注解里定义的异常抛出时，此方法会被执行。如果@ExceptionHandler所在的类是@Controller，则此方法只作用在此类。如果@ExceptionHandler所在的类是@ControllerAdvice，则此方法会作用在全局。全局前面有演示</p>
+</blockquote>
+</li>
+</ul>
+<pre><code class="hljs java"><span class="hljs-meta">@RestController</span>
+<span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">"/emp"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EmployeeExController</span> </span>&#123;
+
+    <span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">"/&#123;id&#125;"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> BaseResponse <span class="hljs-title">getEmployee</span><span class="hljs-params">(@PathVariable(<span class="hljs-string">"id"</span>)</span> <span class="hljs-keyword">int</span> id) <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        <span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span> / <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BaseResponse();
+    &#125;
+    <span class="hljs-comment">/**
+     * 此方法只处理本类抛出的 ArithmeticException 异常
+     */</span>
+    <span class="hljs-meta">@ExceptionHandler</span>(ArithmeticException<span class="hljs-class">.<span class="hljs-keyword">class</span>)
+    <span class="hljs-title">public</span> <span class="hljs-title">BaseResponse</span> <span class="hljs-title">handleEmployeeNotFoundException</span>(<span class="hljs-title">Exception</span> <span class="hljs-title">e</span>) </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BaseResponse(<span class="hljs-string">"-1"</span>, e.getMessage(),<span class="hljs-string">"类级别异常处理"</span>);
+    &#125;
+&#125;</code></pre>
+<p>####测试<br>执行URL:<br><a href="http://127.0.0.1:8080/emp/1" target="_blank" rel="noopener">http://127.0.0.1:8080/emp/1 </a><br>输出 </p>
+<pre><code class="hljs json">&#123;
+<span class="hljs-attr">"errcode"</span>: <span class="hljs-string">"-1"</span>,
+<span class="hljs-attr">"errmsg"</span>: <span class="hljs-string">"/ by zero"</span>,
+<span class="hljs-attr">"data"</span>: <span class="hljs-string">"类级别异常处理"</span>
+&#125;</code></pre>
+<blockquote>
+<p>并且类级别异常处理要优先与全局处理.这样我们写两个基类。分别进行异常统一处理</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseController</span> </span>&#123;
+    <span class="hljs-comment">/**
+     * 统一异常处理
+     */</span>
+    <span class="hljs-meta">@ExceptionHandler</span>(value = &#123;Exception<span class="hljs-class">.<span class="hljs-keyword">class</span>&#125;)
+    <span class="hljs-title">public</span> <span class="hljs-title">String</span> <span class="hljs-title">exceptionHandler</span>(<span class="hljs-title">Exception</span> <span class="hljs-title">e</span>) </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">"/error"</span>;
+    &#125;
+&#125;</code></pre>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseRestController</span> </span>&#123;
+    <span class="hljs-comment">/**
+     * 统一异常处理
+     */</span>
+    <span class="hljs-meta">@ExceptionHandler</span>(value = &#123;Exception<span class="hljs-class">.<span class="hljs-keyword">class</span>&#125;)
+    <span class="hljs-title">public</span> <span class="hljs-title">BaseResponse</span> <span class="hljs-title">exceptionHandler</span>(<span class="hljs-title">Exception</span> <span class="hljs-title">e</span>) </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BaseResponse(-<span class="hljs-number">1</span>, e.getMessage(), <span class="hljs-string">"BaseRestController"</span>);
+    &#125;
+&#125;</code></pre>
+<blockquote>
+<p>注意：父类处理过的异常子类不能再处理，不然会报错</p>
+</blockquote>
+<h3 id="B情况解决方案"><a href="#B情况解决方案" class="headerlink hidden" title="B情况解决方案">#</a>B情况解决方案</h3><p>上面有介绍在spring中,专门处理error的类是BasicErrorController,这个类的两个核心方法,<br>一个方法处理html请求的返回,会默认返回一个错误页面<br>另外一个则是处理json请求的,会返回json格式的错误信息,我们看到的默认输出结果,就是这个方法生成的<br>我们现在知道了我们要关注的地方,但是我们如何改造它呢?</p>
+<p>细心的spring早就想到了可能存在的客制化需求,所以已经为我们留好了口子.</p>
+<p>在源文件里ErrorMvcAutoConfiguration是用来配置BasicErrorController的,如下是核心方法,</p>
+<p>这个方法上面标记了@ConditionalOnMissingBean,也就是说我们只需要实现一个ErrorController接口,注入到上下文中就可以了</p>
+<blockquote>
+<p>@ConditionalOnMissingBean的意思 : 当上下文中存在某一个bean,则不初始化当前被标记的bean</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-meta">@Bean</span>
+<span class="hljs-meta">@ConditionalOnMissingBean</span>(value = ErrorController<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">search</span> </span>= SearchStrategy.CURRENT)
+<span class="hljs-function"><span class="hljs-keyword">public</span> BasicErrorController <span class="hljs-title">basicErrorController</span><span class="hljs-params">(ErrorAttributes errorAttributes)</span> </span>&#123;
+	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> BasicErrorController(errorAttributes, <span class="hljs-keyword">this</span>.serverProperties.getError(),
+		    <span class="hljs-keyword">this</span>.errorViewResolvers);
+&#125;</code></pre>
+<h3 id="实现B情况解决方案"><a href="#实现B情况解决方案" class="headerlink hidden" title="实现B情况解决方案">#</a>实现B情况解决方案</h3><ul>
+<li><p>创建一个类ExceptionErrorController继承至BasicErrorController</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExceptionErrorController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BasicErrorController</span> </span>&#123;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ExceptionErrorController</span><span class="hljs-params">(ErrorAttributes errorAttributes, ErrorProperties errorProperties)</span> </span>&#123;
+        <span class="hljs-keyword">super</span>(errorAttributes, errorProperties);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ExceptionErrorController</span><span class="hljs-params">(ErrorAttributes errorAttributes, ErrorProperties errorProperties, List&lt;ErrorViewResolver&gt; errorViewResolvers)</span> </span>&#123;
+        <span class="hljs-keyword">super</span>(errorAttributes, errorProperties, errorViewResolvers);
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title">errorHtml</span><span class="hljs-params">(HttpServletRequest request, HttpServletResponse response)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">super</span>.errorHtml(request, response);
+    &#125;
+
+    <span class="hljs-comment">// 继承BasicErrorController的方式返回类型就无法改变了。。</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; error(HttpServletRequest request) &#123;
+        Map&lt;String, Object&gt; body = getErrorAttributes(request,
+                isIncludeStackTrace(request, MediaType.ALL));
+        HttpStatus status = getStatus(request);
+        Map&lt;String, Object&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+        <span class="hljs-keyword">if</span> (status == HttpStatus.NOT_FOUND) &#123;
+            <span class="hljs-comment">//404处理</span>
+            map.put(<span class="hljs-string">"errcode"</span>,<span class="hljs-string">"404"</span>);
+            map.put(<span class="hljs-string">"errmsg"</span>,body.get(<span class="hljs-string">"path"</span>).toString() + <span class="hljs-string">" NoFound"</span>);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">//非404处理</span>
+            Object object = request.getAttribute(<span class="hljs-string">"javax.servlet.error.exception"</span>);
+            <span class="hljs-keyword">if</span> (object <span class="hljs-keyword">instanceof</span> Exception) &#123;
+                <span class="hljs-comment">//上下文中能拿到异常的情况</span>
+                Exception exception = (Exception) object;
+                map.put(<span class="hljs-string">"errcode"</span>,<span class="hljs-string">"-1"</span>);
+                map.put(<span class="hljs-string">"errmsg"</span>,exception.getMessage());
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-comment">//上下文中拿不到异常的情况</span>
+                map.put(<span class="hljs-string">"errcode"</span>,<span class="hljs-string">"-1"</span>);
+                map.put(<span class="hljs-string">"errmsg"</span>,<span class="hljs-string">"unknow exception"</span>);
+            &#125;
+        &#125;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResponseEntity&lt;&gt;(map,status);
+    &#125;
+&#125;</code></pre>
+<pre><code class="hljs java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@ConditionalOnWebApplication</span>
+<span class="hljs-meta">@ConditionalOnClass</span>(&#123;Servlet<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">DispatcherServlet</span>.<span class="hljs-title">class</span>&#125;)
+@<span class="hljs-title">AutoConfigureBefore</span>(<span class="hljs-title">WebMvcAutoConfiguration</span>.<span class="hljs-title">class</span>)
+@<span class="hljs-title">EnableConfigurationProperties</span>(<span class="hljs-title">ResourceProperties</span>.<span class="hljs-title">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">ExceptionErrorControllerConfig</span> </span>&#123;
+
+    <span class="hljs-comment">/**
+     * errorViewResolvers
+     */</span>
+    <span class="hljs-meta">@Autowired</span>(required = <span class="hljs-keyword">false</span>)
+    <span class="hljs-keyword">private</span> List&lt;ErrorViewResolver&gt; errorViewResolvers;
+
+    <span class="hljs-comment">/**
+     * serverProperties
+     */</span>
+    <span class="hljs-meta">@Autowired</span>(required = <span class="hljs-keyword">false</span>)
+    <span class="hljs-keyword">private</span> ServerProperties serverProperties;
+
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ExceptionErrorController <span class="hljs-title">exceptionController</span><span class="hljs-params">(ErrorAttributes errorAttributes)</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ExceptionErrorController(errorAttributes, <span class="hljs-keyword">this</span>.serverProperties.getError(), <span class="hljs-keyword">this</span>.errorViewResolvers);
+    &#125;
+&#125;</code></pre>
+</li>
+<li><p>创建一个类ExceptionController继承至AbstractErrorController(此基类实现了ErrorController)<br>编写如下两个方法,其实就是跟默认实现的方法一样,只是内容可以定制<br>然后类中其他的方法,就按照默认的实现照抄就行了</p>
+<pre><code class="hljs java"><span class="hljs-meta">@Controller</span>
+<span class="hljs-meta">@RequestMapping</span>(<span class="hljs-string">"$&#123;server.error.path:$&#123;error.path:/error&#125;&#125;"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExceptionController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractErrorController</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ErrorProperties errorProperties;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ExceptionController</span><span class="hljs-params">(ErrorAttributes errorAttributes,
+                                ErrorProperties errorProperties)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>(errorAttributes, errorProperties, Collections.emptyList());
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ExceptionController</span><span class="hljs-params">(ErrorAttributes errorAttributes,
+                                ErrorProperties errorProperties, List&lt;ErrorViewResolver&gt; errorViewResolvers)</span> </span>&#123;
+        <span class="hljs-keyword">super</span>(errorAttributes, errorViewResolvers);
+        Assert.notNull(errorProperties, <span class="hljs-string">"ErrorProperties must not be null"</span>);
+        <span class="hljs-keyword">this</span>.errorProperties = errorProperties;
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getErrorPath</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.errorProperties.getPath();
+    &#125;
+
+    <span class="hljs-meta">@RequestMapping</span>(produces = <span class="hljs-string">"text/html"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title">errorHtml</span><span class="hljs-params">(HttpServletRequest request,
+                                  HttpServletResponse response)</span> </span>&#123;
+        HttpStatus status = getStatus(request);
+        Map&lt;String, Object&gt; model = Collections.unmodifiableMap(getErrorAttributes(
+                request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));
+        response.setStatus(status.value());
+        ModelAndView modelAndView = resolveErrorView(request, response, status, model);
+        <span class="hljs-keyword">return</span> (modelAndView != <span class="hljs-keyword">null</span>) ? modelAndView : <span class="hljs-keyword">new</span> ModelAndView(<span class="hljs-string">"error"</span>, model);
+    &#125;
+
+    <span class="hljs-meta">@RequestMapping</span>
+    <span class="hljs-meta">@ResponseBody</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ResponseEntity&lt;BaseResponse&gt; <span class="hljs-title">error</span><span class="hljs-params">(HttpServletRequest request)</span> </span>&#123;
+        Map&lt;String, Object&gt; body = getErrorAttributes(request,
+                isIncludeStackTrace(request, MediaType.ALL));
+        HttpStatus status = getStatus(request);
+        BaseResponse response = <span class="hljs-keyword">new</span> BaseResponse();
+        <span class="hljs-keyword">if</span> (status == HttpStatus.NOT_FOUND) &#123;
+            <span class="hljs-comment">//404处理</span>
+            response.setErrcode(<span class="hljs-string">"404"</span>);
+            response.setErrmsg(body.get(<span class="hljs-string">"path"</span>).toString() + <span class="hljs-string">" NoFound"</span>);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            <span class="hljs-comment">//非404处理</span>
+            Object object = request.getAttribute(<span class="hljs-string">"javax.servlet.error.exception"</span>);
+            <span class="hljs-keyword">if</span> (object <span class="hljs-keyword">instanceof</span> Exception) &#123;
+                <span class="hljs-comment">//上下文中能拿到异常的情况</span>
+                Exception exception = (Exception) object;
+                response.setErrcode(<span class="hljs-string">"-1"</span>);
+                response.setErrmsg(exception.getMessage());
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-comment">//上下文中拿不到异常的情况</span>
+                response.setErrcode(<span class="hljs-string">"-1"</span>);
+                response.setErrmsg(<span class="hljs-string">"unknow exception"</span>);
+            &#125;
+        &#125;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ResponseEntity&lt;&gt;(response, status);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isIncludeStackTrace</span><span class="hljs-params">(HttpServletRequest request,
+                                          MediaType produces)</span> </span>&#123;
+        ErrorProperties.IncludeStacktrace include = getErrorProperties().getIncludeStacktrace();
+        <span class="hljs-keyword">if</span> (include == ErrorProperties.IncludeStacktrace.ALWAYS) &#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+        &#125;
+        <span class="hljs-keyword">if</span> (include == ErrorProperties.IncludeStacktrace.ON_TRACE_PARAM) &#123;
+            <span class="hljs-keyword">return</span> getTraceParameter(request);
+        &#125;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> ErrorProperties <span class="hljs-title">getErrorProperties</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.errorProperties;
+    &#125;
+&#125;</code></pre>
+<pre><code class="hljs java"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@ConditionalOnWebApplication</span>
+<span class="hljs-meta">@ConditionalOnClass</span>(&#123;Servlet<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">DispatcherServlet</span>.<span class="hljs-title">class</span>&#125;)
+@<span class="hljs-title">AutoConfigureBefore</span>(<span class="hljs-title">WebMvcAutoConfiguration</span>.<span class="hljs-title">class</span>)
+@<span class="hljs-title">EnableConfigurationProperties</span>(<span class="hljs-title">ResourceProperties</span>.<span class="hljs-title">class</span>)
+<span class="hljs-title">public</span> <span class="hljs-title">class</span> <span class="hljs-title">ExceptionControllerConfig</span> </span>&#123;
+
+    <span class="hljs-comment">/**
+     * errorViewResolvers
+     */</span>
+    <span class="hljs-meta">@Autowired</span>(required = <span class="hljs-keyword">false</span>)
+    <span class="hljs-keyword">private</span> List&lt;ErrorViewResolver&gt; errorViewResolvers;
+
+    <span class="hljs-comment">/**
+     * serverProperties
+     */</span>
+    <span class="hljs-meta">@Autowired</span>(required = <span class="hljs-keyword">false</span>)
+    <span class="hljs-keyword">private</span> ServerProperties serverProperties;
+
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> ExceptionController <span class="hljs-title">exceptionController</span><span class="hljs-params">(ErrorAttributes errorAttributes)</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ExceptionController(errorAttributes, <span class="hljs-keyword">this</span>.serverProperties.getError(), <span class="hljs-keyword">this</span>.errorViewResolvers);
+    &#125;
+&#125;</code></pre>
+</li>
+</ul>
+
+
+  
+    <div class="post-reward">
+      <div id="reward-button">请杯咖啡呗~</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="/images/alipay.jpg" target="_block" class="bg" style="background-image:url('/images/alipay.jpg')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="/images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="ee85ef5b.html">janino使用</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="c7b970e7.html">virtualenv及virtualenvwrapper安装与使用</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="https://blog.dclog.cn">DeCo</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="https://blog.dclog.cn/a22d7ed.html">https://blog.dclog.cn/a22d7ed.html</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="https://blog.dclog.cn">DeCo</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2019
+            <a href="https://blog.dclog.cn">DeCo</a> Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> |
+            <a href="https://github.com/shixiaohu2206/hexo-theme-huhu" target="_blank" rel="noopener">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script>
+  var _hmt = _hmt || []
+  ;(function() {
+    var hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?5a0acc897fd96474a2c8f4deac84611a'
+    var s = document.getElementsByTagName('script')[0]
+    s.parentNode.insertBefore(hm, s)
+  })()
+</script> 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="邓聪个人博客" />
+    
+    <title>
+      Groovy使用 - DcBlog
+    </title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/style/style.css">
+  </head>
+  <body>
+    <div id="fixed-menu">
+      <span class="iconfont icon-arrowup"></span>
+    </div>
+    <div id="progress">
+      <div class="line"></div>
+    </div>
+    <div id="search-shade" class="animated">
+      <div class="input-wrap">
+        <span class="iconfont icon-sousuo"></span>
+        <input type="text" placeholder="Search" />
+        <span class="iconfont icon-close"></span>
+      </div>
+      <div class="search-result">
+        <div class="meta">
+          <span><b id="result-count">0</b> results found</span>
+          <img src="/images/logo.jpg" />
+        </div>
+        <ul id="result-box"></ul>
+      </div>
+    </div>
+    <div id="menu-mask" class="animated">
+      <span class="iconfont icon-close"></span>
+      <div class="nav">
+        
+        <a href="/" class="">
+          首页
+        </a>
+        
+        <a href="/archives" class="">
+          归档
+        </a>
+        
+        <a href="/categories" class="">
+          分类
+        </a>
+        
+        <a href="/tags" class="">
+          标签
+        </a>
+        
+        <a href="/friends" class="">
+          友链
+        </a>
+        
+        <a href="/about" class="">
+          关于
+        </a>
+        
+      </div>
+    </div>
+    <div id="header">
+      <div class="intro">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <div class="author">DeCo</div>
+      </div>
+      <div class="nav">
+        <span class="iconfont icon-menu menu-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+    </div>
+    <div id="side" class="animated bounceInLeft">
+      <div class="shrink">
+        <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        <span class="iconfont icon-menu toggle-icon"></span>
+        <a href="#" class="search-box">
+          <span class="iconfont icon-sousuo"></span>
+        </a>
+      </div>
+      <div class="magnify">
+        <div class="about">
+          <div class="author">DeCo</div>
+          <a href="/" class="logo" style="background-image: url('/images/logo.jpg')"></a>
+        </div>
+
+        <div class="nav">
+          
+          <a href="/" class="">
+            首页
+          </a>
+          
+          <a href="/archives" class="">
+            归档
+          </a>
+          
+          <a href="/categories" class="">
+            分类
+          </a>
+          
+          <a href="/tags" class="">
+            标签
+          </a>
+          
+          <a href="/friends" class="">
+            友链
+          </a>
+          
+          <a href="/about" class="">
+            关于
+          </a>
+          
+          <a href="#" class="search-box">
+            <span class="iconfont icon-sousuo"></span>
+          </a>
+        </div>
+        <div class="bottom">
+          <div class="follow">
+            
+            <a href="https://github.com/dclog" target="_block">
+              <span class="iconfont icon-github"></span>
+            </a>
+            
+            <a href="https://www.facebook.com/" target="_block">
+              <span class="iconfont icon-facebook"></span>
+            </a>
+            
+            <a href="https://www.instagram.com/" target="_block">
+              <span class="iconfont icon-instagram"></span>
+            </a>
+             
+            <a href="/atom.xml" target="_block">
+              <span class="iconfont icon-rss"></span>
+            </a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main animated bounceInRight delay-0.7s">
+        <article class="post-entry">
+    <div class="header">
+      <div class="title">Groovy使用</div>
+      <div class="meta">
+        <span class="item">
+          <span class="iconfont icon-time-circle"></span>
+          <span>2019/05/09</span>
+        </span>
+
+        
+
+         
+        <span class="item">
+          <span class="iconfont icon-folder"></span>
+          <span>
+              
+                
+                  <a href="/categories/java">java</a>
+                
+              
+          </span>
+        </span>
+        
+        
+         
+          <span class="item">
+            <span class="iconfont icon-tag1"></span>
+            <span>
+                
+                  
+                    <a href="/tags/Groovy">Groovy</a>
+                  
+                
+                  
+                    <a href="/tags/脚本">脚本</a>
+                  
+                
+            </span>
+          </span>
+         
+      </div>
+      <div>
+      </div>
+    </div>
+    <blockquote>
+<p>pom依赖</p>
+</blockquote>
+<pre><code class="hljs pom">&lt;dependency&gt;
+    &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
+    &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;
+    &lt;version&gt;2.4.11&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+
+<blockquote>
+<p>测试代码</p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> groovy.json.JsonSlurper;
+<span class="hljs-keyword">import</span> groovy.lang.Binding;
+<span class="hljs-keyword">import</span> groovy.lang.GroovyShell;
+<span class="hljs-keyword">import</span> org.junit.Test;
+
+<span class="hljs-comment">/**
+ * <span class="hljs-doctag">@author</span> DC
+ * <span class="hljs-doctag">@date</span> 2019-05-09
+ */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GroovyTest</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String JSON_STR = <span class="hljs-string">"&#123;\n"</span> +
+            <span class="hljs-string">"    \"evalMatches\": [\n"</span> +
+            <span class="hljs-string">"        &#123;\n"</span> +
+            <span class="hljs-string">"            \"value\": 15,\n"</span> +
+            <span class="hljs-string">"            \"metric\": \"Count\",\n"</span> +
+            <span class="hljs-string">"            \"tags\": &#123;&#125;\n"</span> +
+            <span class="hljs-string">"        &#125;\n"</span> +
+            <span class="hljs-string">"    ],\n"</span> +
+            <span class="hljs-string">"    \"state\": \"alerting\"\n"</span> +
+            <span class="hljs-string">"&#125;"</span>;
+
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String SCRIPT = <span class="hljs-string">"body.evalMatches.each&#123;message += \"指标:\" + it.metric + \",值:\" + it.value + \"\\n\" &#125;"</span>;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String SCRIPT_RETURN = <span class="hljs-string">"body.evalMatches.each&#123;message += \"指标:\" + it.metric + \",值:\" + it.value + \"\\n\" &#125;; return message"</span>;
+
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">groovyTest</span><span class="hljs-params">()</span> </span>&#123;
+        <span class="hljs-comment">// 脚本变量绑定对象</span>
+        Binding binding = <span class="hljs-keyword">new</span> Binding();
+        <span class="hljs-comment">// groovy JSON解析器</span>
+        JsonSlurper jsonSlurper = <span class="hljs-keyword">new</span> JsonSlurper();
+        <span class="hljs-comment">// 将json字符串转换成groovy的json对象</span>
+        Object groovyJsonObject = jsonSlurper.parseText(JSON_STR);
+        <span class="hljs-comment">// 设置groovy变量</span>
+        binding.setVariable(<span class="hljs-string">"body"</span>, groovyJsonObject);
+        binding.setVariable(<span class="hljs-string">"message"</span>, <span class="hljs-string">""</span>);
+        <span class="hljs-comment">// Groovy脚本执行器</span>
+        GroovyShell shell = <span class="hljs-keyword">new</span> GroovyShell(binding);
+        <span class="hljs-comment">// 执行脚本（）</span>
+        shell.evaluate(SCRIPT);
+        <span class="hljs-comment">// 获取变量值</span>
+        String message = String.valueOf(binding.getVariable(<span class="hljs-string">"message"</span>));
+        System.out.println(message);
+    &#125;
+
+
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">groovyTest2</span><span class="hljs-params">()</span> </span>&#123;
+        Binding binding = <span class="hljs-keyword">new</span> Binding();
+        JsonSlurper jsonSlurper = <span class="hljs-keyword">new</span> JsonSlurper();
+        Object groovyJsonObject = jsonSlurper.parseText(JSON_STR);
+        binding.setVariable(<span class="hljs-string">"body"</span>, groovyJsonObject);
+        binding.setVariable(<span class="hljs-string">"message"</span>, <span class="hljs-string">""</span>);
+        <span class="hljs-comment">// 脚本有返回值可以接受</span>
+        GroovyShell shell = <span class="hljs-keyword">new</span> GroovyShell(binding);
+        String message = (String) shell.evaluate(SCRIPT_RETURN);
+        System.out.println(message);
+    &#125;
+
+&#125;</code></pre>
+
+
+<blockquote>
+<p>输出</p>
+</blockquote>
+<pre><code class="hljs plain">指标:Count,值:15</code></pre>
+
+  
+    <div class="post-reward">
+      <div id="reward-button">请杯咖啡呗~</div>
+      <div id="qr">
+        <div class="wrap">
+            
+            <div class="bg-wrap">
+              <a href="/images/alipay.jpg" target="_block" class="bg" style="background-image:url('/images/alipay.jpg')"></a>
+              支付宝
+            </div>
+            
+            
+            <div class="bg-wrap">
+                <a href="/images/weixin.png" target="_block" class="bg" style="background-image:url('/images/weixin.png')"></a>
+              微信
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  
+  
+  <div class="post-guide">
+    <div class="item left">
+        
+          <a href="e80a56ae.html">dubbo处理自定义异常问题</a>
+        
+    </div>
+    <div class="item right">
+        
+          <a href="ee85ef5b.html">janino使用</a>
+        
+    </div>
+  </div>
+
+  
+
+  <div class="post-copyright">
+    <div class="auth">
+      本文作者：<a href="https://blog.dclog.cn">DeCo</a>
+    </div>
+    <div class="link">
+      永久链接：<a href="https://blog.dclog.cn/68870659.html">https://blog.dclog.cn/68870659.html</a>
+    </div>
+    <div class="declare">
+      版权声明：本文首发于<a href="https://blog.dclog.cn">DeCo</a>的博客，转载请注明出处！
+    </div>
+  </div>
+
+  <div id="comment"></div>
+
+  
+  
+</article>
+        <footer>
+          <div class="copyright">
+            ©2019
+            <a href="https://blog.dclog.cn">DeCo</a> Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> |
+            <a href="https://github.com/shixiaohu2206/hexo-theme-huhu" target="_blank" rel="noopener">hexo-theme-huhu</a>
+          </div>
+          
+        </footer>
+      </div>
+    </div>
+    
+  </body>
+  
+</html>
+<script type="text/javascript">
+                  window.HUHU_CONFIG = JSON.parse("{\"share\":[\"weibo\",\"weixin\",\"qqkongjian\",\"QQ\",\"douban\",\"facebook\",\"twitter\",\"google\"],\"service_worker\":{\"open\":false}}")
+                </script> <script type="text/javascript">window.addEventListener('load', function() {
+    
+    window.loadJs = function(d, m, a) {
+      var c = document.getElementsByTagName('head')[0] || document.head || document.documentElement
+      var b = document.createElement('script')
+      b.defer = true
+      b.setAttribute('type', 'text/javascript')
+      b.setAttribute('charset', 'UTF-8')
+      b.setAttribute('async', 'true')
+      b.setAttribute('src', d)
+      m && b.setAttribute('data-main', '/scripts/app-built')
+      if (typeof a === 'function') {
+        if (window.attachEvent) {
+          b.onreadystatechange = function() {
+            var e = b.readyState
+            if (e === 'loaded' || e === 'complete') {
+              b.onreadystatechange = null
+              a()
+            }
+          }
+        } else {
+          b.onload = a
+        }
+      }
+      c.appendChild(b)
+    }
+    window.loadJs && window.loadJs('https://cdn.bootcss.com/require.js/2.3.6/require.min.js', true, function() {require.config({"paths":{"util":"util","share":"share","search":"search","registerSW":"registerSW","valine":"cdn/Valine.min","av":["https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av-min"],"pjax":["https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min"],"jquery":["https://cdn.bootcss.com/jquery/3.4.1/jquery.min"],"confirm":["https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min"],"fancybox":["https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min"]},"map":{"*":{"css":"https://cdn.bootcss.com/require-css/0.1.10/css.min.js"}},"shim":{"fancybox":{"deps":["css!https://cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css"]},"confirm":{"deps":["css!https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css"]}},"waitSeconds":3})})
+  })</script> <script type="text/javascript">
+                  ;(function() {
+                    var bp = document.createElement('script')
+                    var curProtocol = window.location.protocol.split(':')[0]
+                    if (curProtocol === 'https') {
+                      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+                    } else {
+                      bp.src = 'http://push.zhanzhang.baidu.com/push.js'
+                    }
+                    var s = document.getElementsByTagName('script')[0]
+                    s.parentNode.insertBefore(bp, s)
+                  })()
+                </script> 
