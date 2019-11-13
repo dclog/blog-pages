@@ -198,10 +198,10 @@
 <p>在开发及测试环境下，可能需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直连模式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表（说明：官方只建议开发&amp;测试环境使用该功能），用法如下，url指定的地址就是直连地址：</p>
 </blockquote>
 <ul>
-<li>xml配置<pre><code class="hljs plain">&lt;dubbo:reference id=&quot;demoService&quot; interface=&quot;com.alibaba.dubbo.demo.DemoService&quot; version=&quot;1.0.0&quot; url=&quot;dubbo://127.0.0.1:20888&quot; /&gt;</code></pre></li>
-<li>注解配置<pre><code class="hljs plain">@Reference(url = &quot;dubbo://127.0.0.1:20888&quot;)
-private DemoService demoService;</code></pre></li>
-<li>启动VM参数配置(优先级最高)<pre><code class="hljs plain">-Dcom.alibaba.dubbo.demo.DemoService=dubbo://127.0.0.1:20888</code></pre>
+<li>xml配置<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dubbo:reference</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"demoService"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"com.alibaba.dubbo.demo.DemoService"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"1.0.0"</span> <span class="hljs-attr">url</span>=<span class="hljs-string">"dubbo://127.0.0.1:20888"</span> /&gt;</span></code></pre></li>
+<li>注解配置<pre><code class="hljs java"><span class="hljs-meta">@Reference</span>(url = <span class="hljs-string">"dubbo://127.0.0.1:20888"</span>)
+<span class="hljs-keyword">private</span> DemoService demoService;</code></pre></li>
+<li>启动VM参数配置(优先级最高)<pre><code class="hljs java">-Dcom.alibaba.dubbo.demo.DemoService=dubbo:<span class="hljs-comment">//127.0.0.1:20888</span></code></pre>
 </li>
 </ul>
 

@@ -196,6 +196,104 @@
     </div>
     <a href="/d6284ddb/1.png" data-caption="oracle" data-fancybox="images"><img src="/d6284ddb/1.png" alt="oracle"></a>
 
+<blockquote>
+<p>持续集成。。。</p>
+</blockquote>
+<ol>
+<li><p>nvl(value1, value2)</p>
+<blockquote>
+<p>函数作用：从两个表达式中返回一个非null值</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- 如果value1的值非空，优先取value2的值；结果为 1</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL"</span>(<span class="hljs-number">1</span>, <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">FROM</span> dual;
+<span class="hljs-comment">-- 如果value1的值空且value2的值非空，则取expression2的值；结果为 2</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL"</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-number">2</span>) <span class="hljs-keyword">FROM</span> dual;
+<span class="hljs-comment">-- 如果value1和value2均为空，则结果为NULL</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL"</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">FROM</span> dual;</code></pre>
+<blockquote>
+<p>注意: value1, value2要保持字段类型相同！但是 NVL”(1, ‘1’) 不会报错</p>
+</blockquote>
+<pre><code class="hljs sql">[SQL] <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL"</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'4d'</span>) <span class="hljs-keyword">FROM</span> dual
+[Err] ORA<span class="hljs-number">-01722</span>: invalid <span class="hljs-built_in">number</span></code></pre></li>
+<li><p>nvl(value1, value2, value3)</p>
+<blockquote>
+<p>函数作用：如果value1的值为null,函数返回value3,否则函数返回value2.也就是说函数永远不会返回value1</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- c</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL2"</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>) <span class="hljs-keyword">FROM</span> dual;
+<span class="hljs-comment">-- b</span>
+<span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL2"</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>) <span class="hljs-keyword">FROM</span> dual;</code></pre>
+<blockquote>
+<p>注意: value2, value3要保持字段类型相同！</p>
+</blockquote>
+<pre><code class="hljs sql">[SQL] <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL2"</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-number">1</span>, <span class="hljs-string">'a'</span>) <span class="hljs-keyword">FROM</span> dual
+[Err] ORA<span class="hljs-number">-01722</span>: invalid <span class="hljs-built_in">number</span></code></pre></li>
+<li><p>decode(field_name, value1, new_value1, value2, new_value2, default_value)</p>
+<blockquote>
+<p>函数作用：类似if…else…语句块，针对某个字段，如果它的值为value1,则转换为newValue1，如果值为value2，则转换为newValue2，其他情况显示默认值</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- A</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">decode</span>(<span class="hljs-string">'1'</span>,<span class="hljs-string">'1'</span>,<span class="hljs-string">'A'</span>,<span class="hljs-string">'2'</span>,<span class="hljs-string">'B'</span>,<span class="hljs-string">'默认值'</span>) <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">-- B</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">decode</span>(<span class="hljs-string">'2'</span>,<span class="hljs-string">'1'</span>,<span class="hljs-string">'A'</span>,<span class="hljs-string">'2'</span>,<span class="hljs-string">'B'</span>,<span class="hljs-string">'默认值'</span>) <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">-- 默认值</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">decode</span>(<span class="hljs-string">'3'</span>,<span class="hljs-string">'1'</span>,<span class="hljs-string">'A'</span>,<span class="hljs-string">'2'</span>,<span class="hljs-string">'B'</span>,<span class="hljs-string">'默认值'</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+<blockquote>
+<p>注意：decode(field_name, value1, new_value1, value2, new_value2, default_value)其中的value1，newValue1等可以是一个表达式</p>
+</blockquote>
+</li>
+<li><p>row_number(order by field_name)</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> row_number() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">name</span>) nid,<span class="hljs-keyword">id</span>,<span class="hljs-keyword">name</span> <span class="hljs-keyword">from</span> a;</code></pre>
+<table>
+<thead>
+<tr>
+<th>NID</th>
+<th>NAME</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>李四</td>
+</tr>
+<tr>
+<td>2</td>
+<td>王五</td>
+</tr>
+<tr>
+<td>3</td>
+<td>张三</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>to_date(source_string, formater_string)</p>
+<blockquote>
+<p>函数作用：将字符串转换为日期类型</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">to_date</span>(<span class="hljs-string">'20191113'</span>,<span class="hljs-string">'yyyyMMdd'</span>) <span class="hljs-keyword">from</span> dual;
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">to_date</span>(<span class="hljs-string">'2019-07-09 23:59:59'</span>, <span class="hljs-string">'yyyy-mm-dd hh24:mi:ss'</span>) <span class="hljs-keyword">from</span> dual;</code></pre></li>
+<li><p>to_char()</p>
+<blockquote>
+<p>函数作用：将其他类型转换为字符串类型</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> to_char(<span class="hljs-keyword">sysdate</span>, <span class="hljs-string">'yyyymmdd'</span>) <span class="hljs-keyword">from</span> dual;
+<span class="hljs-keyword">select</span> to_char(<span class="hljs-number">99</span>, <span class="hljs-string">'fm999.00'</span>) <span class="hljs-keyword">from</span> dual</code></pre></li>
+<li><p>wm_concat</p>
+<blockquote>
+<p>函数作用：行转列，将多行查询结果聚合到一行的某一列中,用’,’拼接</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- 结果: 李四,王五,张三</span>
+<span class="hljs-keyword">select</span> wm_concat(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">name</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">USER</span></code></pre>
+<blockquote>
+<p>注意：高版本oracle可能会去掉</p>
+</blockquote>
+</li>
+<li><p>listagg() within group(order by field_name) over(partition by field_name)</p>
+<blockquote>
+<p>函数作用：同wm_concat,但是listagg可以自定义拼接符号,测试发现性能要比wm_concat好,建议使用listagg</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">listagg</span>(<span class="hljs-keyword">name</span>, <span class="hljs-string">'-'</span>) <span class="hljs-keyword">within</span> <span class="hljs-keyword">group</span>(<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">name</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">USER</span>;</code></pre></li>
+</ol>
+
 
   
     <div class="post-reward">
