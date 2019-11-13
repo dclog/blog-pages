@@ -276,13 +276,13 @@
 <p>函数作用：将其他类型转换为字符串类型</p>
 </blockquote>
 <pre><code class="hljs sql"><span class="hljs-keyword">select</span> to_char(<span class="hljs-keyword">sysdate</span>, <span class="hljs-string">'yyyymmdd'</span>) <span class="hljs-keyword">from</span> dual;
-<span class="hljs-keyword">select</span> to_char(<span class="hljs-number">99</span>, <span class="hljs-string">'fm999.00'</span>) <span class="hljs-keyword">from</span> dual</code></pre></li>
+<span class="hljs-keyword">select</span> to_char(<span class="hljs-number">99</span>, <span class="hljs-string">'fm999.00'</span>) <span class="hljs-keyword">from</span> dual;</code></pre></li>
 <li><p>wm_concat</p>
 <blockquote>
 <p>函数作用：行转列，将多行查询结果聚合到一行的某一列中,用’,’拼接</p>
 </blockquote>
 <pre><code class="hljs sql"><span class="hljs-comment">-- 结果: 李四,王五,张三</span>
-<span class="hljs-keyword">select</span> wm_concat(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">name</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">USER</span></code></pre>
+<span class="hljs-keyword">select</span> wm_concat(<span class="hljs-keyword">distinct</span> <span class="hljs-keyword">name</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">USER</span>;</code></pre>
 <blockquote>
 <p>注意：高版本oracle可能会去掉</p>
 </blockquote>
