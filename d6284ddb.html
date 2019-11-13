@@ -214,7 +214,8 @@
 <p>注意: value1, value2要保持字段类型相同！但是 NVL”(1, ‘1’) 不会报错</p>
 </blockquote>
 <pre><code class="hljs sql">[SQL] <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL"</span>(<span class="hljs-number">1</span>, <span class="hljs-string">'4d'</span>) <span class="hljs-keyword">FROM</span> dual
-[Err] ORA<span class="hljs-number">-01722</span>: invalid <span class="hljs-built_in">number</span></code></pre></li>
+[Err] ORA<span class="hljs-number">-01722</span>: invalid <span class="hljs-built_in">number</span></code></pre>
+</li>
 <li><p>nvl(value1, value2, value3)</p>
 <blockquote>
 <p>函数作用：如果value1的值为null,函数返回value3,否则函数返回value2.也就是说函数永远不会返回value1</p>
@@ -227,7 +228,8 @@
 <p>注意: value2, value3要保持字段类型相同！</p>
 </blockquote>
 <pre><code class="hljs sql">[SQL] <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"NVL2"</span>(<span class="hljs-literal">NULL</span>, <span class="hljs-number">1</span>, <span class="hljs-string">'a'</span>) <span class="hljs-keyword">FROM</span> dual
-[Err] ORA<span class="hljs-number">-01722</span>: invalid <span class="hljs-built_in">number</span></code></pre></li>
+[Err] ORA<span class="hljs-number">-01722</span>: invalid <span class="hljs-built_in">number</span></code></pre>
+</li>
 <li><p>decode(field_name, value1, new_value1, value2, new_value2, default_value)</p>
 <blockquote>
 <p>函数作用：类似if…else…语句块，针对某个字段，如果它的值为value1,则转换为newValue1，如果值为value2，则转换为newValue2，其他情况显示默认值</p>
@@ -270,13 +272,15 @@
 <p>函数作用：将字符串转换为日期类型</p>
 </blockquote>
 <pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">to_date</span>(<span class="hljs-string">'20191113'</span>,<span class="hljs-string">'yyyyMMdd'</span>) <span class="hljs-keyword">from</span> dual;
-<span class="hljs-keyword">select</span> <span class="hljs-keyword">to_date</span>(<span class="hljs-string">'2019-07-09 23:59:59'</span>, <span class="hljs-string">'yyyy-mm-dd hh24:mi:ss'</span>) <span class="hljs-keyword">from</span> dual;</code></pre></li>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">to_date</span>(<span class="hljs-string">'2019-07-09 23:59:59'</span>, <span class="hljs-string">'yyyy-mm-dd hh24:mi:ss'</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+</li>
 <li><p>to_char()</p>
 <blockquote>
 <p>函数作用：将其他类型转换为字符串类型</p>
 </blockquote>
 <pre><code class="hljs sql"><span class="hljs-keyword">select</span> to_char(<span class="hljs-keyword">sysdate</span>, <span class="hljs-string">'yyyymmdd'</span>) <span class="hljs-keyword">from</span> dual;
-<span class="hljs-keyword">select</span> to_char(<span class="hljs-number">99</span>, <span class="hljs-string">'fm999.00'</span>) <span class="hljs-keyword">from</span> dual;</code></pre></li>
+<span class="hljs-keyword">select</span> to_char(<span class="hljs-number">99</span>, <span class="hljs-string">'fm999.00'</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+</li>
 <li><p>wm_concat</p>
 <blockquote>
 <p>函数作用：行转列，将多行查询结果聚合到一行的某一列中,用’,’拼接</p>
@@ -291,7 +295,137 @@
 <blockquote>
 <p>函数作用：同wm_concat,但是listagg可以自定义拼接符号,测试发现性能要比wm_concat好,建议使用listagg</p>
 </blockquote>
-<pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">listagg</span>(<span class="hljs-keyword">name</span>, <span class="hljs-string">'-'</span>) <span class="hljs-keyword">within</span> <span class="hljs-keyword">group</span>(<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">name</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">USER</span>;</code></pre></li>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">listagg</span>(<span class="hljs-keyword">name</span>, <span class="hljs-string">'-'</span>) <span class="hljs-keyword">within</span> <span class="hljs-keyword">group</span>(<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-keyword">name</span>) <span class="hljs-keyword">from</span> <span class="hljs-keyword">USER</span>;</code></pre>
+</li>
+<li><p>concat(value1, value2)</p>
+<blockquote>
+<p>函数作用：字符串拼接函数</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-keyword">concat</span>(<span class="hljs-string">'left'</span>, <span class="hljs-string">'right'</span>) <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">-- 也可以用 ||</span>
+<span class="hljs-keyword">select</span> <span class="hljs-string">'left'</span> || <span class="hljs-string">'right'</span> <span class="hljs-keyword">from</span> dual;</code></pre>
+</li>
+<li><p>sys_guid()</p>
+<blockquote>
+<p>函数作用：产生并返回一个全球唯一的标识符(原始值)由16个字节组成，32个字符</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> sys_guid() <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">--解决乱码,rawtohex(),将raw串转换为十六进制</span>
+<span class="hljs-keyword">select</span> rawtohex(sys_guid()) <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">--转小写</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">lower</span>(rawtohex(sys_guid())) <span class="hljs-keyword">from</span> dual;</code></pre>
+</li>
+<li><p>trunc</p>
+<blockquote>
+<p>函数作用：是截取日期或数字，根据规则返回指定的值</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-keyword">select</span> trunc(<span class="hljs-keyword">sysdate</span>, <span class="hljs-string">'yyyy'</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>mm</td>
+<td>返回当月第一天</td>
+</tr>
+<tr>
+<td>yy</td>
+<td>返回当年第一天</td>
+</tr>
+<tr>
+<td>dd</td>
+<td>返回当前年月日</td>
+</tr>
+<tr>
+<td>yyyy</td>
+<td>返回当年第一天</td>
+</tr>
+<tr>
+<td>d</td>
+<td>返回当前星期的第一天</td>
+</tr>
+<tr>
+<td><pre><code class="hljs sql"><span class="hljs-keyword">select</span> trunc(<span class="hljs-number">126.56</span>, <span class="hljs-number">0</span>) <span class="hljs-keyword">from</span> dual;</code></pre></td>
+<td></td>
+</tr>
+<tr>
+<td>规则</td>
+<td>含义</td>
+</tr>
+<tr>
+<td>—</td>
+<td>—-</td>
+</tr>
+<tr>
+<td>0</td>
+<td>默认值，取下取整</td>
+</tr>
+<tr>
+<td>正数a</td>
+<td>保留小数点后面a位小数，其他的抹掉，如果a比小数点后的位数多，则保留原值</td>
+</tr>
+<tr>
+<td>负数b</td>
+<td>小数点后面的全部去掉，小数点向左移动abs(b)位，用0代替被抹掉的数字，如果所有数字都被抹掉，则返回0</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>substr(source, start [,length])</p>
+<blockquote>
+<p>函数作用：截取字符串</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- bcd</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">substr</span>(<span class="hljs-string">'abcde'</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+<blockquote>
+<p>注意：oracle字符串索引从1开始</p>
+</blockquote>
+</li>
+<li><p>replace(field_name, sub_str, replace_str)</p>
+<blockquote>
+<p>函数作用：将指定的字符串替换为指定的字符串</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- world world</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">replace</span>(<span class="hljs-string">'hello world'</span>, <span class="hljs-string">'hello'</span>, <span class="hljs-string">'world'</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+<blockquote>
+<p>注意：也可以用在update语句set部分</p>
+</blockquote>
+</li>
+<li><p>trim</p>
+<blockquote>
+<p>函数作用：去掉左右两端的空白字符</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- dsf</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">trim</span>(<span class="hljs-string">' dsf '</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+<blockquote>
+<p>注意：仅去掉左边空白字符用ltrim，仅去掉右边空白字符用rtrim</p>
+</blockquote>
+</li>
+<li><p>sign</p>
+<blockquote>
+<p>函数作用：取数字n的符号,大于0返回1, 小于0返回-1, 等于0返回0</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- 1	-1	0</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">sign</span>(<span class="hljs-number">50</span>),<span class="hljs-keyword">sign</span>(<span class="hljs-number">-100</span>),<span class="hljs-keyword">sign</span>(<span class="hljs-number">0</span>) <span class="hljs-keyword">from</span> dual;</code></pre>
+</li>
+<li><p>round(number[,decimal])</p>
+<blockquote>
+<p>函数作用：对数字n进行四舍五入处理，保留decimal位小数</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- 123	124	123.6	120</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">round</span>(<span class="hljs-number">123.34</span>),<span class="hljs-keyword">round</span>(<span class="hljs-number">123.51</span>),<span class="hljs-keyword">round</span>(<span class="hljs-number">123.56</span>,<span class="hljs-number">1</span>),<span class="hljs-keyword">round</span>(<span class="hljs-number">123.34</span>,<span class="hljs-number">-1</span>) <span class="hljs-keyword">from</span> dual;</code></pre></li>
+<li><p>coalesce(expression1,expression2…)</p>
+<blockquote>
+<p>函数作用：返回表达式中第一个不为空的值，如果全为空则返回空值</p>
+</blockquote>
+<pre><code class="hljs sql"><span class="hljs-comment">-- 8</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">coalesce</span>(<span class="hljs-literal">null</span>,<span class="hljs-number">3</span>+<span class="hljs-number">5</span>,<span class="hljs-number">4</span>+<span class="hljs-number">6</span>) <span class="hljs-keyword">value</span> <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">-- 10</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">coalesce</span>(<span class="hljs-literal">null</span>,<span class="hljs-literal">null</span>,<span class="hljs-number">4</span>+<span class="hljs-number">6</span>) <span class="hljs-keyword">value</span> <span class="hljs-keyword">from</span> dual;
+<span class="hljs-comment">-- NULL</span>
+<span class="hljs-keyword">select</span> <span class="hljs-keyword">coalesce</span>(<span class="hljs-literal">null</span>,<span class="hljs-literal">null</span>,<span class="hljs-literal">null</span>) <span class="hljs-keyword">value</span> <span class="hljs-keyword">from</span> dual;</code></pre></li>
 </ol>
 
 
