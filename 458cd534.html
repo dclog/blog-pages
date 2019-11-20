@@ -16,7 +16,7 @@
     <meta name="description" content="邓聪个人博客" />
     
     <title>
-      dubbo直连Provider - DcBlog
+      SpringBoot Web 接收和返回xml数据 - DcBlog
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -156,11 +156,11 @@
       <div class="main animated bounceInRight delay-0.7s">
         <article class="post-entry">
     <div class="header">
-      <div class="title">dubbo直连Provider</div>
+      <div class="title">SpringBoot Web 接收和返回xml数据</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
-          <span>2019/11/12</span>
+          <span>2019/11/15</span>
         </span>
 
         
@@ -171,7 +171,7 @@
           <span>
               
                 
-                  <a href="/categories/rpc">rpc</a>
+                  <a href="/categories/SpringBoot">SpringBoot</a>
                 
               
           </span>
@@ -184,7 +184,7 @@
             <span>
                 
                   
-                    <a href="/tags/dubbo">dubbo</a>
+                    <a href="/tags/xml">xml</a>
                   
                 
             </span>
@@ -194,16 +194,103 @@
       <div>
       </div>
     </div>
-    <blockquote>
-<p>在开发及测试环境下，可能需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直连模式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表（说明：官方只建议开发&amp;测试环境使用该功能），用法如下，url指定的地址就是直连地址：</p>
+    <h3 id="添加pom依赖"><a href="#添加pom依赖" class="headerlink hidden" title="添加pom依赖">#</a>添加pom依赖</h3><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.fasterxml.jackson.dataformat<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jackson-dataformat-xml<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.8.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+
+<blockquote>
+<p>请求报文</p>
 </blockquote>
-<ul>
-<li>xml配置<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dubbo:reference</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"demoService"</span> <span class="hljs-attr">interface</span>=<span class="hljs-string">"com.alibaba.dubbo.demo.DemoService"</span> <span class="hljs-attr">version</span>=<span class="hljs-string">"1.0.0"</span> <span class="hljs-attr">url</span>=<span class="hljs-string">"dubbo://127.0.0.1:20888"</span> /&gt;</span></code></pre></li>
-<li>注解配置<pre><code class="hljs java"><span class="hljs-meta">@Reference</span>(url = <span class="hljs-string">"dubbo://127.0.0.1:20888"</span>)
-<span class="hljs-keyword">private</span> DemoService demoService;</code></pre></li>
-<li>启动VM参数配置(优先级最高)<pre><code class="hljs java">-Dcom.alibaba.dubbo.demo.DemoService=dubbo:<span class="hljs-comment">//127.0.0.1:20888</span></code></pre>
-</li>
-</ul>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">xml</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">result_code</span>&gt;</span>&lt;![CDATA[SUCCESS]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">result_code</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">sign</span>&gt;</span>&lt;![CDATA[781F357070A6DC1D64F3820B6D0635AF]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sign</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">mch_id</span>&gt;</span>10010404<span class="hljs-tag">&lt;/<span class="hljs-name">mch_id</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">contract_code</span>&gt;</span>100001256<span class="hljs-tag">&lt;/<span class="hljs-name">contract_code</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">openid</span>&gt;</span>&lt;![CDATA[onqOjjmM1tad-3ROpncN-yUfa6ua]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">openid</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">plan_id</span>&gt;</span>&lt;![CDATA[123]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">plan_id</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">change_type</span>&gt;</span>&lt;![CDATA[ADD]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">change_type</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">operate_time</span>&gt;</span>&lt;![CDATA[2015-07-01 10:00:00]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">operate_time</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">contract_id</span>&gt;</span>&lt;![CDATA[Wx15463511252015071056489715]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">contract_id</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">xml</span>&gt;</span></code></pre>
+
+<h3 id="1-使用对象接收"><a href="#1-使用对象接收" class="headerlink hidden" title="1.使用对象接收">#</a>1.使用对象接收</h3><pre><code class="hljs java"><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@JacksonXmlRootElement</span>(localName = <span class="hljs-string">"xml"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TsContract</span> </span>&#123;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"return_code"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String returnCode;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"sign"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String sign;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"mch_id"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String mchId;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"contract_code"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String contractCode;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"openid"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String openid;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"plan_id"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String planId;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"change_type"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String changeType;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"operate_time"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String operateTime;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"contract_id"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String contractId;
+&#125;</code></pre>
+<blockquote>
+<p>@JacksonXmlCData注解,在返回的数据加上<code>&lt;![CDATA[]]&gt;</code> </p>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span>(value = <span class="hljs-string">"/xml"</span>, produces = MediaType.APPLICATION_XML_VALUE)
+<span class="hljs-function"><span class="hljs-keyword">public</span> TsContract <span class="hljs-title">xml</span><span class="hljs-params">(@RequestBody TsContract tsContract)</span> <span class="hljs-keyword">throws</span> JsonProcessingException </span>&#123;
+    <span class="hljs-keyword">return</span> tsContract;
+&#125;</code></pre>
+
+<h3 id="2-使用字符串接收"><a href="#2-使用字符串接收" class="headerlink hidden" title="2.使用字符串接收">#</a>2.使用字符串接收</h3><pre><code class="hljs java"><span class="hljs-meta">@Data</span>
+<span class="hljs-meta">@JacksonXmlRootElement</span>(localName = <span class="hljs-string">"xml"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ReturnParam</span> </span>&#123;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"return_code"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String returnCode;
+
+    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"return_msg"</span>)
+    <span class="hljs-meta">@JacksonXmlCData</span>
+    <span class="hljs-keyword">private</span> String returnMsg;
+&#125;</code></pre>
+
+<blockquote>
+</blockquote>
+<pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span>(value = <span class="hljs-string">"/xmlStr"</span>, produces = MediaType.APPLICATION_XML_VALUE)
+<span class="hljs-function"><span class="hljs-keyword">public</span> ReturnParam <span class="hljs-title">xmlStr</span><span class="hljs-params">(@RequestBody String body)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;
+    ObjectMapper mapper = <span class="hljs-keyword">new</span> XmlMapper();
+    mapper.enable(SerializationFeature.INDENT_OUTPUT);
+    Map&lt;String, Object&gt; map = mapper.readValue(body, <span class="hljs-keyword">new</span> TypeReference&lt;Map&lt;String, Object&gt;&gt;() &#123;
+     &#125;);
+     <span class="hljs-comment">// 取值</span>
+     String sign = (String) map.get(<span class="hljs-string">"sign"</span>);
+     ReturnParam returnParam = <span class="hljs-keyword">new</span> ReturnParam();
+     returnParam.setreturnMsg(<span class="hljs-string">"OK"</span>);
+     returnParam.setreturnCode(<span class="hljs-string">"SUCCESS"</span>);
+     <span class="hljs-keyword">return</span> returnParam;
+&#125;</code></pre>
 
 
   
@@ -231,12 +318,12 @@
   <div class="post-guide">
     <div class="item left">
         
-          <a href="458cd534.html">SpringBoot Web 接收和返回xml数据</a>
+          <a href="59a89d25.html">Linux上日志简单分析</a>
         
     </div>
     <div class="item right">
         
-          <a href="d6284ddb.html">Oracle常用内置函数</a>
+          <a href="7a1313ea.html">dubbo直连Provider</a>
         
     </div>
   </div>
@@ -248,7 +335,7 @@
       本文作者：<a href="https://blog.dclog.cn">DeCo</a>
     </div>
     <div class="link">
-      永久链接：<a href="https://blog.dclog.cn/7a1313ea.html">https://blog.dclog.cn/7a1313ea.html</a>
+      永久链接：<a href="https://blog.dclog.cn/458cd534.html">https://blog.dclog.cn/458cd534.html</a>
     </div>
     <div class="declare">
       版权声明：本文首发于<a href="https://blog.dclog.cn">DeCo</a>的博客，转载请注明出处！
