@@ -16,7 +16,7 @@
     <meta name="description" content="邓聪个人博客" />
     
     <title>
-      SpringBoot Web 接收和返回xml数据 - DcBlog
+      Elasticsearch脚本查询 - DcBlog
     </title>
     <link rel="manifest" href="/manifest.json" />
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
@@ -156,11 +156,11 @@
       <div class="main animated bounceInRight delay-0.7s">
         <article class="post-entry">
     <div class="header">
-      <div class="title">SpringBoot Web 接收和返回xml数据</div>
+      <div class="title">Elasticsearch脚本查询</div>
       <div class="meta">
         <span class="item">
           <span class="iconfont icon-time-circle"></span>
-          <span>2019/11/15</span>
+          <span>2020/01/02</span>
         </span>
 
         
@@ -171,7 +171,7 @@
           <span>
               
                 
-                  <a href="/categories/SpringBoot">SpringBoot</a>
+                  <a href="/categories/Elasticsearch">Elasticsearch</a>
                 
               
           </span>
@@ -184,7 +184,7 @@
             <span>
                 
                   
-                    <a href="/tags/xml">xml</a>
+                    <a href="/tags/Elasticsearch">Elasticsearch</a>
                   
                 
             </span>
@@ -194,103 +194,106 @@
       <div>
       </div>
     </div>
-    <h3 id="添加pom依赖"><a href="#添加pom依赖" class="headerlink hidden" title="添加pom依赖">#</a>添加pom依赖</h3><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
-   <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.fasterxml.jackson.dataformat<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jackson-dataformat-xml<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.8.8<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
-
-<blockquote>
-<p>请求报文</p>
+    <h4 id="es查询通过字段值的长度过滤"><a href="#es查询通过字段值的长度过滤" class="headerlink hidden" title="es查询通过字段值的长度过滤">#</a>es查询通过字段值的长度过滤</h4><pre><code class="hljs bash">GET api-monitor-2019.12.28/_search
+&#123;
+  <span class="hljs-string">"size"</span>: 10, 
+  <span class="hljs-string">"query"</span>: &#123;
+    <span class="hljs-string">"script"</span>: &#123;
+      <span class="hljs-string">"script"</span>: <span class="hljs-string">"doc['tget.keyword'].value.length() &gt; 4"</span>
+    &#125;
+  &#125;
+&#125;</code></pre>
+<h4 id="ES-Lucene-expressions-language-文档"><a href="#ES-Lucene-expressions-language-文档" class="headerlink hidden" title="ES Lucene expressions language 文档">#</a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting-expression.html" target="_blank" rel="noopener">ES Lucene expressions language 文档</a></h4><blockquote>
+<p>文档中的 <code>doc[&#39;field_name&#39;].length</code> 取的值是数组长度而不是字段值的长度<br> 使用<code>doc[&#39;field_name&#39;].value.length()</code></p>
 </blockquote>
-<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">xml</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">result_code</span>&gt;</span>&lt;![CDATA[SUCCESS]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">result_code</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">sign</span>&gt;</span>&lt;![CDATA[781F357070A6DC1D64F3820B6D0635AF]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">sign</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">mch_id</span>&gt;</span>10010404<span class="hljs-tag">&lt;/<span class="hljs-name">mch_id</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">contract_code</span>&gt;</span>100001256<span class="hljs-tag">&lt;/<span class="hljs-name">contract_code</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">openid</span>&gt;</span>&lt;![CDATA[onqOjjmM1tad-3ROpncN-yUfa6ua]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">openid</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">plan_id</span>&gt;</span>&lt;![CDATA[123]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">plan_id</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">change_type</span>&gt;</span>&lt;![CDATA[ADD]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">change_type</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">operate_time</span>&gt;</span>&lt;![CDATA[2015-07-01 10:00:00]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">operate_time</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">contract_id</span>&gt;</span>&lt;![CDATA[Wx15463511252015071056489715]]&gt;<span class="hljs-tag">&lt;/<span class="hljs-name">contract_id</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">xml</span>&gt;</span></code></pre>
-
-<h3 id="1-使用对象接收"><a href="#1-使用对象接收" class="headerlink hidden" title="1.使用对象接收">#</a>1.使用对象接收</h3><pre><code class="hljs java"><span class="hljs-meta">@Data</span>
-<span class="hljs-meta">@JacksonXmlRootElement</span>(localName = <span class="hljs-string">"xml"</span>)
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TsContract</span> </span>&#123;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"return_code"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String returnCode;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"sign"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String sign;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"mch_id"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String mchId;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"contract_code"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String contractCode;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"openid"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String openid;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"plan_id"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String planId;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"change_type"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String changeType;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"operate_time"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String operateTime;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"contract_id"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String contractId;
-&#125;</code></pre>
 <blockquote>
-<p>@JacksonXmlCData注解,在返回的数据加上<code>&lt;![CDATA[]]&gt;</code> </p>
+<p>text类型的字段会出现错误。</p>
 </blockquote>
-<pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span>(value = <span class="hljs-string">"/xml"</span>, produces = MediaType.APPLICATION_XML_VALUE)
-<span class="hljs-function"><span class="hljs-keyword">public</span> TsContract <span class="hljs-title">xml</span><span class="hljs-params">(@RequestBody TsContract tsContract)</span> <span class="hljs-keyword">throws</span> JsonProcessingException </span>&#123;
-    <span class="hljs-keyword">return</span> tsContract;
+<pre><code class="hljs bash">GET api-monitor-2019.12.28/_search
+&#123;
+  <span class="hljs-string">"size"</span>: 10, 
+  <span class="hljs-string">"query"</span>: &#123;
+    <span class="hljs-string">"script"</span>: &#123;
+      <span class="hljs-string">"script"</span>: <span class="hljs-string">"doc['tget'].value.length() &gt; 4"</span>
+    &#125;
+  &#125;
 &#125;</code></pre>
-
-<h3 id="2-使用字符串接收"><a href="#2-使用字符串接收" class="headerlink hidden" title="2.使用字符串接收">#</a>2.使用字符串接收</h3><pre><code class="hljs java"><span class="hljs-meta">@Data</span>
-<span class="hljs-meta">@JacksonXmlRootElement</span>(localName = <span class="hljs-string">"xml"</span>)
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ReturnParam</span> </span>&#123;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"return_code"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String returnCode;
-
-    <span class="hljs-meta">@JacksonXmlProperty</span>(localName = <span class="hljs-string">"return_msg"</span>)
-    <span class="hljs-meta">@JacksonXmlCData</span>
-    <span class="hljs-keyword">private</span> String returnMsg;
+<pre><code class="hljs json">&#123;
+  <span class="hljs-attr">"error"</span>: &#123;
+    <span class="hljs-attr">"root_cause"</span>: [
+      &#123;
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"script_exception"</span>,
+        <span class="hljs-attr">"reason"</span>: <span class="hljs-string">"runtime error"</span>,
+        <span class="hljs-attr">"script_stack"</span>: [
+          <span class="hljs-string">"org.elasticsearch.index.mapper.TextFieldMapper$TextFieldType.fielddataBuilder(TextFieldMapper.java:670)"</span>,
+          <span class="hljs-string">"org.elasticsearch.index.fielddata.IndexFieldDataService.getForField(IndexFieldDataService.java:116)"</span>,
+          <span class="hljs-string">"org.elasticsearch.index.query.QueryShardContext.lambda$lookup$0(QueryShardContext.java:283)"</span>,
+          <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup$1.run(LeafDocLookup.java:88)"</span>,
+          <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup$1.run(LeafDocLookup.java:85)"</span>,
+          <span class="hljs-string">"java.base/java.security.AccessController.doPrivileged(Native Method)"</span>,
+          <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup.get(LeafDocLookup.java:85)"</span>,
+          <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup.get(LeafDocLookup.java:39)"</span>,
+          <span class="hljs-string">"doc['tget'].value.length() &gt; 2"</span>,
+          <span class="hljs-string">"    ^---- HERE"</span>
+        ],
+        <span class="hljs-attr">"script"</span>: <span class="hljs-string">"doc['tget'].value.length() &gt; 2"</span>,
+        <span class="hljs-attr">"lang"</span>: <span class="hljs-string">"painless"</span>
+      &#125;
+    ],
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"search_phase_execution_exception"</span>,
+    <span class="hljs-attr">"reason"</span>: <span class="hljs-string">"all shards failed"</span>,
+    <span class="hljs-attr">"phase"</span>: <span class="hljs-string">"query"</span>,
+    <span class="hljs-attr">"grouped"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"failed_shards"</span>: [
+      &#123;
+        <span class="hljs-attr">"shard"</span>: <span class="hljs-number">0</span>,
+        <span class="hljs-attr">"index"</span>: <span class="hljs-string">"api-monitor-2019.12.28"</span>,
+        <span class="hljs-attr">"node"</span>: <span class="hljs-string">"hTWnl3yCTw6oqUiWqBkSiQ"</span>,
+        <span class="hljs-attr">"reason"</span>: &#123;
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"script_exception"</span>,
+          <span class="hljs-attr">"reason"</span>: <span class="hljs-string">"runtime error"</span>,
+          <span class="hljs-attr">"script_stack"</span>: [
+            <span class="hljs-string">"org.elasticsearch.index.mapper.TextFieldMapper$TextFieldType.fielddataBuilder(TextFieldMapper.java:670)"</span>,
+            <span class="hljs-string">"org.elasticsearch.index.fielddata.IndexFieldDataService.getForField(IndexFieldDataService.java:116)"</span>,
+            <span class="hljs-string">"org.elasticsearch.index.query.QueryShardContext.lambda$lookup$0(QueryShardContext.java:283)"</span>,
+            <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup$1.run(LeafDocLookup.java:88)"</span>,
+            <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup$1.run(LeafDocLookup.java:85)"</span>,
+            <span class="hljs-string">"java.base/java.security.AccessController.doPrivileged(Native Method)"</span>,
+            <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup.get(LeafDocLookup.java:85)"</span>,
+            <span class="hljs-string">"org.elasticsearch.search.lookup.LeafDocLookup.get(LeafDocLookup.java:39)"</span>,
+            <span class="hljs-string">"doc['tget'].value.length() &gt; 2"</span>,
+            <span class="hljs-string">"    ^---- HERE"</span>
+          ],
+          <span class="hljs-attr">"script"</span>: <span class="hljs-string">"doc['tget'].value.length() &gt; 2"</span>,
+          <span class="hljs-attr">"lang"</span>: <span class="hljs-string">"painless"</span>,
+          <span class="hljs-attr">"caused_by"</span>: &#123;
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"illegal_argument_exception"</span>,
+            <span class="hljs-attr">"reason"</span>: <span class="hljs-string">"Fielddata is disabled on text fields by default. Set fielddata=true on [tget] in order to load fielddata in memory by uninverting the inverted index. Note that this can however use significant memory. Alternatively use a keyword field instead."</span>
+          &#125;
+        &#125;
+      &#125;
+    ]
+  &#125;,
+  <span class="hljs-attr">"status"</span>: <span class="hljs-number">500</span>
 &#125;</code></pre>
-
-<blockquote>
+<h4 id="ES-fielddata官方文档"><a href="#ES-fielddata官方文档" class="headerlink hidden" title="ES fielddata官方文档">#</a><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/fielddata.html" target="_blank" rel="noopener">ES fielddata官方文档</a></h4><blockquote>
+<p>解决方法</p>
 </blockquote>
-<pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span>(value = <span class="hljs-string">"/xmlStr"</span>, produces = MediaType.APPLICATION_XML_VALUE)
-<span class="hljs-function"><span class="hljs-keyword">public</span> ReturnParam <span class="hljs-title">xmlStr</span><span class="hljs-params">(@RequestBody String body)</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;
-    ObjectMapper mapper = <span class="hljs-keyword">new</span> XmlMapper();
-    mapper.enable(SerializationFeature.INDENT_OUTPUT);
-    Map&lt;String, Object&gt; map = mapper.readValue(body, <span class="hljs-keyword">new</span> TypeReference&lt;Map&lt;String, Object&gt;&gt;() &#123;
-     &#125;);
-     <span class="hljs-comment">// 取值</span>
-     String sign = (String) map.get(<span class="hljs-string">"sign"</span>);
-     ReturnParam returnParam = <span class="hljs-keyword">new</span> ReturnParam();
-     returnParam.setreturnMsg(<span class="hljs-string">"OK"</span>);
-     returnParam.setreturnCode(<span class="hljs-string">"SUCCESS"</span>);
-     <span class="hljs-keyword">return</span> returnParam;
+<ol>
+<li>使用 tget.keyword</li>
+<li>字段的fileddata设置为true<pre><code class="hljs bash">PUT api-monitor-2019.11.04/_mapping/doc
+&#123;
+  <span class="hljs-string">"properties"</span>: &#123;
+    <span class="hljs-string">"tget"</span>: &#123;
+      <span class="hljs-string">"type"</span>: <span class="hljs-string">"text"</span>
+      , <span class="hljs-string">"fielddata"</span>: <span class="hljs-literal">true</span>
+    &#125;
+  &#125;
 &#125;</code></pre>
+
+
+</li>
+</ol>
 
 
   
@@ -318,12 +321,10 @@
   <div class="post-guide">
     <div class="item left">
         
-          <a href="59a89d25.html">Linux上日志简单分析</a>
-        
     </div>
     <div class="item right">
         
-          <a href="7a1313ea.html">dubbo直连Provider</a>
+          <a href="59a89d25.html">Linux上日志简单分析</a>
         
     </div>
   </div>
@@ -335,7 +336,7 @@
       本文作者：<a href="https://blog.dclog.cn">DeCo</a>
     </div>
     <div class="link">
-      永久链接：<a href="https://blog.dclog.cn/458cd534.html">https://blog.dclog.cn/458cd534.html</a>
+      永久链接：<a href="https://blog.dclog.cn/8cf390e9.html">https://blog.dclog.cn/8cf390e9.html</a>
     </div>
     <div class="declare">
       版权声明：本文首发于<a href="https://blog.dclog.cn">DeCo</a>的博客，转载请注明出处！
